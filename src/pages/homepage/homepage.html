@@ -15,7 +15,9 @@
   <ion-list inset>
     <ion-item *ngFor="let cat of cats"> {{ cat.name }} </ion-item>
   </ion-list>
-
-  <!-- <button danger (click)="loadMore()">Load More</button> --> -->
+  <ion-list inset>
+      <ion-item *ngFor="let acc of accels"> {{ acc }} </ion-item>
+    </ion-list>
+  <button danger (click)="loadMore()">Load More</button> -->
 
 </ion-content>
