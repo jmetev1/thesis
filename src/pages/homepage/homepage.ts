@@ -9,34 +9,39 @@ import { CatProvider } from '../../app/providers/cat-provider/cat-provider';
   templateUrl: 'homepage.html',
 })
 export class Homepage {
-
-  public cats:Array<Object>;
+  // public ready:string = 'false';
+  public cats:Array<Object> = [{name: 'meow'}, {name: 'howl'}];
   private lastX:number;
   private lastY:number;
   private lastZ:number;
   private moveCounter:number = 0;
 
+  // constructor(
+  //   public catProvider:CatProvider,
+  //   private navController: NavController)
+  //   {}
+  //   loadMore() {
+  //     console.log('load more cats');
+  //     this.loadCats();
+  //   }
+  //   loadCats() {
+  //     this.catProvider.load().then(result => {
+  //       this.cats = result;
+  //     });
+  //   }
+  // }
   constructor(
     public catProvider:CatProvider,
-    private navController: NavController)
-    {}
-    loadMore() {
-      console.log('load more cats');
-      this.loadCats();
-    }
-    loadCats() {
-      this.catProvider.load().then(result => {
-        this.cats = result;
-      });
-    }
+    private navController: NavController,
+    platform:Platform,
+    // private deviceMotion: DeviceMotion,
+  ) {
+    // this.loadCats();
+    platform.ready().then(() => {
+      // ready = 'true';
+    })
   }
-  //   platform:Platform,
-  //   private deviceMotion: DeviceMotion,
-  // ) {
-  //   this.loadCats();
-  //   let ready = false;
-  //   platform.ready().then(() => {
-  //     ready = true;
+}
   //     var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
   //       if(!this.lastX) {
   //         this.lastX = acc.x;
