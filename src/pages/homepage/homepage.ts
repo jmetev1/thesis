@@ -16,6 +16,7 @@ export class Homepage {
   private lastZ:number;
   private moveCounter:number = 0;
   platform: Platform;
+  accels: Array<number>;
 
   constructor(
     public catProvider:CatProvider,
@@ -26,14 +27,13 @@ export class Homepage {
 
     platform.ready().then(() => {
       var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
-        //console.log(acc);
-
         if(!this.lastX) {
           this.lastX = acc.x;
           this.lastY = acc.y;
           this.lastZ = acc.z;
           return;
         }
+        const accels: Array<number> = [this.lastX, this.lastY, this.lastZ];
 
         let deltaX:number, deltaY:number, deltaZ:number;
         deltaX = Math.abs(acc.x-this.lastX);
