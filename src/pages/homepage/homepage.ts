@@ -34,6 +34,7 @@ export class Homepage {
           this.lastZ = acc.z;
           return;
         }
+        this.accels = [acc.x, acc.y, acc.z];
 
         let deltaX:number, deltaY:number, deltaZ:number;
         deltaX = Math.abs(acc.x-this.lastX);
@@ -72,6 +73,7 @@ export class Homepage {
     this.catProvider.load().then(result => {
       this.cats = result;
     });
+    this.loadAcc();
   }
 
 }
