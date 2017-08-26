@@ -24,6 +24,7 @@ export class Homepage {
     platform:Platform,
     deviceMotion: DeviceMotion) {
     this.loadCats();
+    this.loadAcc();
 
     platform.ready().then(() => {
       var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
@@ -33,7 +34,6 @@ export class Homepage {
           this.lastZ = acc.z;
           return;
         }
-        const accels: Array<number> = [this.lastX, this.lastY, this.lastZ];
 
         let deltaX:number, deltaY:number, deltaZ:number;
         deltaX = Math.abs(acc.x-this.lastX);
@@ -46,10 +46,10 @@ export class Homepage {
           this.moveCounter = Math.max(0, --this.moveCounter);
         }
 
-        if(this.moveCounter > 2) { 
+        if(this.moveCounter > 2) {
           console.log('SHAKE');
-          this.loadCats(); 
-          this.moveCounter=0; 
+          this.loadCats();
+          this.moveCounter=0;
         }
 
         this.lastX = acc.x;
@@ -62,6 +62,10 @@ export class Homepage {
   loadMore() {
     console.log('load more cats');
     this.loadCats();
+    this.loadAcc();
+  }
+  loadAcc() {
+    this.accels = [Math.random(), 1, 1];
   }
 
   loadCats() {
