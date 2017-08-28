@@ -16,7 +16,7 @@ export class Homepage {
   platform: Platform;
   accels: Array<number> = [0, 0, 0];
   limit:number;
-  show:Boolean = false;
+  plat:String = 'android';
   joltSize:number;
   others:Array<number> = [0, 0, 0];
 
@@ -28,9 +28,8 @@ export class Homepage {
     this.limit = 2;
     this.joltSize = 1;
 
-    if (this.platform !== undefined) {
+    if (this.plat === 'android') {
       platform.ready().then(() => {
-        this.show = true;
         var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
           if(!this.lastX) {
             this.lastX = acc.x;
@@ -57,8 +56,6 @@ export class Homepage {
           }
         });
       });
-    } else {
-      this.lastZ = 0;
     }
   }
   loadMore() {
