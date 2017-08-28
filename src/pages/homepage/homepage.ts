@@ -33,7 +33,6 @@ export class Homepage {
     this.loadAcc();
   }
   accOn() {
-    this.platform.ready().then(() => {
       var subscription = this.deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
         if(!this.lastX) {
           this.lastX = acc.x;
@@ -56,7 +55,6 @@ export class Homepage {
           this.moveCounter=0;
         }
       });
-    });
   }
 
   loadAcc() {
