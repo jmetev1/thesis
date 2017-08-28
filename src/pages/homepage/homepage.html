@@ -13,10 +13,11 @@
   <input [(ngModel)]="limit" placeholder="new limit">
   <div>The Cut Off For size of jolt Is: {{joltSize}}</div>
   <input [(ngModel)]="joltSize" placeholder="new joltSize">
-  <ion-list inset>
+  <ion-list inset> Shake Readings
       <ion-item *ngFor="let acc of accels"> {{ acc }} </ion-item>
   </ion-list>
+
   <button danger (click)="loadMore()">Load More</button>
-  <div>Accelerometer on is: {{show}}</div>
-  <button danger (click)="accOn()">Activate Pothole Detector</button>
+  <div>platform.ready is : {{show}}</div>
+  <!-- <button danger (click)="accOn()">Activate Pothole Detector</button> -->
 </ion-content>

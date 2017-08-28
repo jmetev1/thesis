@@ -14,22 +14,23 @@ export class Homepage {
   private lastZ:number;
   private moveCounter:number = 0;
   platform: Platform;
-  accels: Array<number>;
+  accels: Array<number> = [0, 0, 0];
   limit:number;
-  show:Boolean;
+  show:Boolean = false;
   joltSize:number;
+  others:Array<number> = [0, 0, 0];
 
   constructor(
     private navController:NavController,
     platform:Platform,
     deviceMotion: DeviceMotion) {
-    this.loadAcc();
+    this.loadMore;
     this.limit = 2;
-    this.show = true;
     this.joltSize = 1;
 
     if (this.platform !== undefined) {
       platform.ready().then(() => {
+        this.show = true;
         var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
           if(!this.lastX) {
             this.lastX = acc.x;
@@ -62,17 +63,6 @@ export class Homepage {
   }
   loadMore() {
     console.log('load more cats');
-    this.loadAcc();
-  }
-  accOn() {
-
-
-
-
-
-  }
-
-  loadAcc() {
-    this.accels = [Math.random(), this.limit, this.lastZ];
+    this.others = [Math.random(), this.limit, 1];
   }
 }
