@@ -56,13 +56,19 @@ export class Homepage {
           }
         });
       });
+    } else {
+      this.lastZ = 0;
     }
   }
   loadMore() {
     console.log('load more cats');
     this.loadAcc();
   }
+  accOn() {
+    this.show = !this.show;
+  }
+
   loadAcc() {
-    this.accels = [Math.random(), this.limit, 1];
+    this.accels = [Math.random(), this.limit, this.lastZ];
   }
 }
