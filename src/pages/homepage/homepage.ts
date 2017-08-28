@@ -18,18 +18,46 @@ export class Homepage {
   limit:number;
   show:Boolean;
   joltSize:number;
-  deviceMotion: DeviceMotion;
 
   constructor(
     private navController:NavController,
-    platform:Platform) {
+    platform:Platform,
+    deviceMotion: DeviceMotion) {
     this.loadAcc();
     this.limit = 2;
-    this.show = false;
+    this.show = true;
     this.joltSize = 1;
 
-    if (this.show) {
-      this.accOn();
+    if (this.platform !== undefined) {
+      platform.ready().then(() => {
+        var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
+          if(!this.lastX) {
+            this.lastX = acc.x;
+            this.lastY = acc.y;
+            this.lastZ = acc.z;
+            return;
+          }
+          this.accels = [acc.x, acc.y, acc.z];
+
+          let deltaX:number, deltaY:number, deltaZ:number;
+          deltaX = Math.abs(acc.x-this.lastX);
+          deltaY = Math.abs(acc.y-this.lastY);
+          deltaZ = Math.abs(acc.z-this.lastZ);
+
+          if(deltaX + deltaY + deltaZ > 3) {
+            this.moveCounter++;
+          } else {
+            this.moveCounter = Math.max(0, --this.moveCounter);
+          }
+          if(this.moveCounter > this.limit) {
+            console.log('SHAKE');
+
+            this.moveCounter=0;
+          }
+        });
+      });
+    } else {
+      this.lastZ = 0;
     }
   }
   loadMore() {
@@ -37,29 +65,11 @@ export class Homepage {
     this.loadAcc();
   }
   accOn() {
-    var subscription = this.deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
-      this.show = true;
-      if(!this.lastX) {
-        this.lastX = acc.x;
-        this.lastY = acc.y;
-        this.lastZ = acc.z;
-        return;
-      }
-      this.accels = [acc.x, acc.y, acc.z];
-      let deltaX:number, deltaY:number, deltaZ:number;
-      deltaX = Math.abs(acc.x-this.lastX);
-      deltaY = Math.abs(acc.y-this.lastY);
-      deltaZ = Math.abs(acc.z-this.lastZ);
 
-      if(deltaX + deltaY + deltaZ > 3) {
-        this.moveCounter++;
-      } else {
-        this.moveCounter = Math.max(0, --this.moveCounter);
-      }
-      if(this.moveCounter > this.limit) {
-        this.moveCounter=0;
-      }
-    });
+
+
+
+
   }
 
   loadAcc() {
