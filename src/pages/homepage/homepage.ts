@@ -27,6 +27,10 @@ export class Homepage {
     this.limit = 2;
     this.show = false;
     this.joltSize = 1;
+
+    if (this.show) {
+      this.accOn();
+    }
   }
   loadMore() {
     console.log('load more cats');
