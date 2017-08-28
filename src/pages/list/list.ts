@@ -14,6 +14,7 @@ import {Geolocation } from '@ionic-native/geolocation';
 export class ListPage {
   platform: Platform
   plat: String = ''
+  coord: Array<number> = [0, 0]
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -23,12 +24,14 @@ export class ListPage {
       this.plat = 'phone'
       if (this.plat === 'phone') {
         platform.ready().then(() => {
-          this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3')
-            .then(onSuccess => console.log('loaded'));
+          this.coord[0] = 1
+          this.coord[1] = 1
+          // this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3')
+          //   .then(onSuccess => console.log('loaded'));
           let watch = this.geolocation.watchPosition();
           watch.subscribe((data) => {
-            let lat = data.coords.latitude;
-            let long = data.coords.longitude;
+            this.coord[0] = data.coords.latitude;
+            this.coord[1] = data.coords.longitude;
           })
         })
       }
