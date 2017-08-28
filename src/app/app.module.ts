@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
   providers: [
     NativeAudio,
     DeviceMotion,
+    Geolocation,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

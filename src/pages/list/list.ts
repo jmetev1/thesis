@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { ItemDetailsPage } from '../item-details/item-details';
 import { NativeAudio } from '@ionic-native/native-audio';
+import {Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'page-list',
@@ -11,15 +12,23 @@ import { NativeAudio } from '@ionic-native/native-audio';
 })
 
 export class ListPage {
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  platform: String = ''
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private nativeAudio: NativeAudio
+    private nativeAudio: NativeAudio,
+    private geolocation: Geolocation,
   ) {
-    this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3')
-      .then(onSuccess => console.log('loaded'));
+    this.platform = 'phone'
+    if (this.platform === 'phone') {
+      this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3')
+        .then(onSuccess => console.log('loaded'));
+      let watch = this.geolocation.watchPosition();
+      watch.subscribe((data) => {
+        let lat = data.coords.latitude;
+        let long = data.coords.longitude;
+      })
+    }
   }
   playSound() {
     this.nativeAudio.play('uniqueId1').then(onSuccess => {
