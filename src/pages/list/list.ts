@@ -14,7 +14,6 @@ import { FormsModule }   from '@angular/forms';
 
 export class ListPage {
   platform: Platform
-  plat: String = ''
   coord: Array<number> = [0, 0]
   constructor(
     public navCtrl: NavController,
@@ -22,15 +21,12 @@ export class ListPage {
     private geolocation: Geolocation,
     platform:Platform,
     ) {
-      this.plat = 'phone'
-      if (this.plat === 'phone') {
-        platform.ready().then(() => {
-          let watch = this.geolocation.watchPosition();
-          watch.subscribe((data) => {
-            this.coord[0] = data.coords.latitude;
-            this.coord[1] = data.coords.longitude;
-          })
-        })
-      }
-    }
+    platform.ready().then(() => {
+      let watch = this.geolocation.watchPosition();
+      watch.subscribe((data) => {
+        this.coord[0] = data.coords.latitude;
+        this.coord[1] = data.coords.longitude;
+      })
+    })
+  }
 }
