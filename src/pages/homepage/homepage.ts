@@ -10,16 +10,18 @@ import { FormsModule }   from '@angular/forms';
   templateUrl: 'homepage.html',
 })
 export class Homepage {
-  private lastX:number;
-  private lastY:number;
-  private lastZ:number;
-  private moveCounter:number = 0;
-  platform: Platform;
-  accels: Array<number> = [0, 0, 0];
-  limit:number;
-  plat:String = 'android';
-  joltSize:number;
-  others:Array<number> = [0, 0, 0];
+  private lastX:number
+  private lastY:number
+  private lastZ:number
+  private moveCounter:number = 0
+  platform: Platform
+  accels: Array<number> = [0, 0, 0]
+  limit:number
+  plat:String = 'android'
+  joltSize:number
+  others:Array<number> = [0, 0, 0]
+  deviceMotion: DeviceMotion
+
   constructor(
     private navController:NavController,
     platform:Platform,
@@ -30,39 +32,39 @@ export class Homepage {
 
     if (this.plat === 'android') {
       platform.ready().then(() => {
-        const check = () => {
-          var subscription = deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
-            if(!this.lastX) {
-              this.lastX = acc.x;
-              this.lastY = acc.y;
-              this.lastZ = acc.z;
-              return;
-            }
-            this.accels = [acc.x, acc.y, acc.z];
-
-            let deltaX:number, deltaY:number, deltaZ:number;
-            deltaX = Math.abs(acc.x-this.lastX);
-            deltaY = Math.abs(acc.y-this.lastY);
-            deltaZ = Math.abs(acc.z-this.lastZ);
-
-            if(deltaX + deltaY + deltaZ > 3) {
-              this.moveCounter++;
-            } else {
-              this.moveCounter = Math.max(0, --this.moveCounter);
-            }
-            if(this.moveCounter > this.limit) {
-              console.log('SHAKE');
-
-              this.moveCounter=0;
-            }
-          });
-        }
-        check();
+        this.check();
       });
     }
   }
   loadMore() {
     console.log('load more cats');
     this.others = [Math.random(), this.limit, 1];
+  }
+  check = () => {
+    var subscription = this.deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
+      if(!this.lastX) {
+        this.lastX = acc.x;
+        this.lastY = acc.y;
+        this.lastZ = acc.z;
+        return;
+      }
+      this.accels = [acc.x, acc.y, acc.z];
+
+      let deltaX:number, deltaY:number, deltaZ:number;
+      deltaX = Math.abs(acc.x-this.lastX);
+      deltaY = Math.abs(acc.y-this.lastY);
+      deltaZ = Math.abs(acc.z-this.lastZ);
+  
+      if(deltaX + deltaY + deltaZ > 3) {
+        this.moveCounter++;
+      } else {
+        this.moveCounter = Math.max(0, --this.moveCounter);
+      }
+      if(this.moveCounter > this.limit) {
+        console.log('SHAKE');
+  
+        this.moveCounter=0;
+      }
+    });
   }
 }
