@@ -32,8 +32,8 @@ export class Homepage {
       if (platform.is('cordova') === true) {
         const check = () => {
           this.accels = [1,1,1]
-          var subscription = this.deviceMotion.watchAcceleration({frequency:200})
-            .subscribe((acc: DeviceMotionAccelerationData) => {
+          var subscription = deviceMotion.watchAcceleration({frequency:200})
+            .subscribe(acc => {
               this.accels = [2,2,2]
               if(!this.lastX) {
                 this.lastX = acc.x;
