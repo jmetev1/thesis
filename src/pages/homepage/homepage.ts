@@ -25,7 +25,8 @@ export class Homepage {
   deviceMotion: DeviceMotion
   constructor(
     private navController:NavController,
-    platform:Platform) {
+    platform:Platform,
+    deviceMotion:DeviceMotion) {
     this.limit = 2;
     this.joltSize = 1;
     platform.ready().then(() => {
