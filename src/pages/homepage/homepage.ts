@@ -23,6 +23,7 @@ export class Homepage {
   joltSize:number;
   others:Array<number> = [0, 0, 0];
   trigger:String = 'none'
+  curPlatform:Array<string> = ['a', 'a']
   constructor(
     private navController:NavController,
     platform:Platform,
@@ -33,6 +34,7 @@ export class Homepage {
 
     if (this.plat === 'android') {
       platform.ready().then(() => {
+        this.curPlatform = platform.platforms();
         const check = () => {
           var subscription = deviceMotion.watchAcceleration({frequency:200})  .subscribe(acc => {
               if(!this.lastX) {
@@ -60,6 +62,7 @@ export class Homepage {
               }
             });
           }
+          check()
         });
     } else {
       setInterval(() =>  {

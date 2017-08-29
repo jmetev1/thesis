@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="home" padding>
-  <h2>DO THE NOLA SHAKE!15</h2>
+  <h2>DO THE NOLA SHAKE!16</h2>
   <div>Wait for it! {{trigger}}</div>
   <div>The Cut Off For # of movements Is: {{limit}}</div>
   <input [(ngModel)]="limit" placeholder="new limit">
@@ -17,7 +17,9 @@
   <ion-list inset> Shake Readings
       <ion-item *ngFor="let acc of accels"> {{ acc }} </ion-item>
   </ion-list>
-
+  <ion-list inset> platforms
+    <ion-item *ngFor="let p of curPlatform"> {{ p }} </ion-item>
+</ion-list>
   <button danger (click)="saveTrigger()">Load More</button>
   <div>platformis : {{platform.platforms()}}</div>
   <!-- <button danger (click)="accOn()">Activate Pothole Detector</button> -->
