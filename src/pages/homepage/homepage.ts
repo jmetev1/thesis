@@ -19,7 +19,7 @@ export class Homepage {
   platform: Platform;
   accels: Array<number> = [0, 0, 0];
   limit:number;
-  plat:String = 'android';
+  plat:String = '';
   joltSize:number;
   others:Array<number> = [0, 0, 0];
   trigger:String = 'none'
@@ -31,12 +31,11 @@ export class Homepage {
     this.loadMore;
     this.limit = 2;
     this.joltSize = 1;
-
-    if (this.plat === 'android') {
-      platform.ready().then(() => {
-        this.curPlatform = platform.platforms();
+    platform.ready().then(() => {
+      if (platform.is('cordova') === true) {
         const check = () => {
-          var subscription = deviceMotion.watchAcceleration({frequency:200})  .subscribe(acc => {
+          var subscription = deviceMotion.watchAcceleration({frequency:200})
+            .subscribe(acc => {
               if(!this.lastX) {
                 this.lastX = acc.x;
                 this.lastY = acc.y;
@@ -44,12 +43,10 @@ export class Homepage {
                 return;
               }
               this.accels = [acc.x, acc.y, acc.z];
-
               let deltaX:number, deltaY:number, deltaZ:number;
               deltaX = Math.abs(acc.x-this.lastX);
               deltaY = Math.abs(acc.y-this.lastY);
               deltaZ = Math.abs(acc.z-this.lastZ);
-
               if(deltaX + deltaY + deltaZ > 3) {
                 this.moveCounter++;
               } else {
@@ -63,13 +60,13 @@ export class Homepage {
             });
           }
           check()
-        });
-    } else {
-      setInterval(() =>  {
-        this.trigger = 'SHOOOK!';
-        setTimeout(() => {this.trigger = ''}, 2000)
-      }, 3000)
-    }
+      } else {
+        setInterval(() =>  {
+          this.trigger = 'SHOOOK!';
+          setTimeout(() => {this.trigger = ''}, 2000)
+        }, 3000)
+      }
+    })
   }
   saveTrigger() {
     this.trigger = 'SHOOOK!';
