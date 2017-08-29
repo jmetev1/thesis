@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+import {ShakeProvider } from '../../app/providers/shakeProvider';
 
 import { FormsModule }   from '@angular/forms';
 
@@ -8,20 +9,20 @@ import { FormsModule }   from '@angular/forms';
 @Component({
   selector: 'page-homepage',
   templateUrl: 'homepage.html',
+  providers: [ShakeProvider]
 })
 export class Homepage {
-  private lastX:number
-  private lastY:number
-  private lastZ:number
-  private moveCounter:number = 0
-  platform: Platform
-  accels: Array<number> = [0, 0, 0]
-  limit:number
-  plat:String = 'android'
-  joltSize:number
-  others:Array<number> = [0, 0, 0]
-  deviceMotion: DeviceMotion
-
+  private lastX:number;
+  private lastY:number;
+  private lastZ:number;
+  private moveCounter:number = 0;
+  platform: Platform;
+  accels: Array<number> = [0, 0, 0];
+  limit:number;
+  plat:String = '';
+  joltSize:number;
+  others:Array<number> = [0, 0, 0];
+  trigger:String = 'none'
   constructor(
     private navController:NavController,
     platform:Platform,
@@ -32,39 +33,46 @@ export class Homepage {
 
     if (this.plat === 'android') {
       platform.ready().then(() => {
-        this.check();
-      });
+        const check = () => {
+          var subscription = deviceMotion.watchAcceleration({frequency:200})  .subscribe(acc => {
+              if(!this.lastX) {
+                this.lastX = acc.x;
+                this.lastY = acc.y;
+                this.lastZ = acc.z;
+                return;
+              }
+              this.accels = [acc.x, acc.y, acc.z];
+
+              let deltaX:number, deltaY:number, deltaZ:number;
+              deltaX = Math.abs(acc.x-this.lastX);
+              deltaY = Math.abs(acc.y-this.lastY);
+              deltaZ = Math.abs(acc.z-this.lastZ);
+
+              if(deltaX + deltaY + deltaZ > 3) {
+                this.moveCounter++;
+              } else {
+                this.moveCounter = Math.max(0, --this.moveCounter);
+              }
+              if(this.moveCounter > this.limit) {
+                console.log('SHAKE');
+                this.saveTrigger();
+                this.moveCounter=0;
+              }
+            });
+          }
+        });
+    } else {
+      setInterval(() =>  {
+        this.trigger = 'SHOOOK!';
+        setTimeout(() => {this.trigger = ''}, 2000)
+      }, 3000)
     }
   }
-  loadMore() {
-    console.log('load more cats');
-    this.others = [Math.random(), this.limit, 1];
+  saveTrigger() {
+    this.trigger = 'SHOOOK!';
+    setTimeout(() => {this.trigger = ''}, 2000)
   }
-  check = () => {
-    var subscription = this.deviceMotion.watchAcceleration({frequency:200}).subscribe(acc => {
-      if(!this.lastX) {
-        this.lastX = acc.x;
-        this.lastY = acc.y;
-        this.lastZ = acc.z;
-        return;
-      }
-      this.accels = [acc.x, acc.y, acc.z];
-
-      let deltaX:number, deltaY:number, deltaZ:number;
-      deltaX = Math.abs(acc.x-this.lastX);
-      deltaY = Math.abs(acc.y-this.lastY);
-      deltaZ = Math.abs(acc.z-this.lastZ);
-  
-      if(deltaX + deltaY + deltaZ > 3) {
-        this.moveCounter++;
-      } else {
-        this.moveCounter = Math.max(0, --this.moveCounter);
-      }
-      if(this.moveCounter > this.limit) {
-        console.log('SHAKE');
-  
-        this.moveCounter=0;
-      }
-    });
+  loadMore() {
+    this.others = [Math.random(), this.limit, 1];
   }
 }

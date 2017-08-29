@@ -22,8 +22,6 @@ export class ListPage {
     private geolocation: Geolocation,
     platform:Platform,
     ) {
-      this.coord[0] = 1
-      this.coord[1] = 1
       this.plat = 'phone'
       if (this.plat === 'phone') {
         platform.ready().then(() => {
