@@ -19,47 +19,18 @@ export class Homepage {
   platform: Platform;
   accels: Array<number> = [0, 0, 0];
   limit:number;
-  plat:String = '';
   joltSize:number;
-  others:Array<number> = [0, 0, 0];
   trigger:String = 'none'
   curPlatform:Array<string> = ['a', 'a']
+  deviceMotion: DeviceMotion
   constructor(
     private navController:NavController,
-    platform:Platform,
-    deviceMotion: DeviceMotion) {
-    this.loadMore;
+    platform:Platform) {
     this.limit = 2;
     this.joltSize = 1;
     platform.ready().then(() => {
       if (platform.is('cordova') === true) {
-        const check = () => {
-          var subscription = deviceMotion.watchAcceleration({frequency:200})
-            .subscribe(acc => {
-              if(!this.lastX) {
-                this.lastX = acc.x;
-                this.lastY = acc.y;
-                this.lastZ = acc.z;
-                return;
-              }
-              this.accels = [acc.x, acc.y, acc.z];
-              let deltaX:number, deltaY:number, deltaZ:number;
-              deltaX = Math.abs(acc.x-this.lastX);
-              deltaY = Math.abs(acc.y-this.lastY);
-              deltaZ = Math.abs(acc.z-this.lastZ);
-              if(deltaX + deltaY + deltaZ > 3) {
-                this.moveCounter++;
-              } else {
-                this.moveCounter = Math.max(0, --this.moveCounter);
-              }
-              if(this.moveCounter > this.limit) {
-                console.log('SHAKE');
-                this.saveTrigger();
-                this.moveCounter=0;
-              }
-            });
-          }
-          check()
+        this.check()
       } else {
         setInterval(() =>  {
           this.trigger = 'SHOOOK!';
@@ -68,11 +39,34 @@ export class Homepage {
       }
     })
   }
+  check = () => {
+    var subscription = this.deviceMotion.watchAcceleration({frequency:200})
+      .subscribe(acc => {
+        if(!this.lastX) {
+          this.lastX = acc.x;
+          this.lastY = acc.y;
+          this.lastZ = acc.z;
+          return;
+        }
+        this.accels = [acc.x, acc.y, acc.z];
+        let deltaX:number, deltaY:number, deltaZ:number;
+        deltaX = Math.abs(acc.x-this.lastX);
+        deltaY = Math.abs(acc.y-this.lastY);
+        deltaZ = Math.abs(acc.z-this.lastZ);
+        if(deltaX + deltaY + deltaZ > 3) {
+          this.moveCounter++;
+        } else {
+          this.moveCounter = Math.max(0, --this.moveCounter);
+        }
+        if(this.moveCounter > this.limit) {
+          console.log('SHAKE');
+          this.saveTrigger();
+          this.moveCounter=0;
+        }
+      });
+    }
   saveTrigger() {
     this.trigger = 'SHOOOK!';
     setTimeout(() => {this.trigger = ''}, 2000)
-  }
-  loadMore() {
-    this.others = [Math.random(), this.limit, 1];
   }
 }
