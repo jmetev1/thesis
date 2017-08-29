@@ -31,7 +31,7 @@ export class Homepage {
     this.joltSize = 1;
     platform.ready().then(() => {
       if (platform.is('cordova') === true) {
-        this.check()
+        this.check(deviceMotion)
       } else {
         setInterval(() =>  {
           this.trigger = 'SHOOOK!';
@@ -40,34 +40,34 @@ export class Homepage {
       }
     })
   }
-  check = () => {
-    this.accels = [1,1,1]
-    var subscription = this.deviceMotion.watchAcceleration({frequency:200})
-      .subscribe((acc: DeviceMotionAccelerationData) => {
-        this.accels = [2,2,2]
-        if(!this.lastX) {
-          this.lastX = acc.x;
-          this.lastY = acc.y;
-          this.lastZ = acc.z;
-          return;
+      check = (deviceMotion) => {
+        this.accels = [1,1,1]
+        var subscription = this.deviceMotion.watchAcceleration({frequency:200})
+          .subscribe((acc: DeviceMotionAccelerationData) => {
+            this.accels = [2,2,2]
+            if(!this.lastX) {
+              this.lastX = acc.x;
+              this.lastY = acc.y;
+              this.lastZ = acc.z;
+              return;
+            }
+            this.accels = [acc.x, acc.y, acc.z];
+            let deltaX:number, deltaY:number, deltaZ:number;
+            deltaX = Math.abs(acc.x-this.lastX);
+            deltaY = Math.abs(acc.y-this.lastY);
+            deltaZ = Math.abs(acc.z-this.lastZ);
+            if(deltaX + deltaY + deltaZ > 3) {
+              this.moveCounter++;
+            } else {
+              this.moveCounter = Math.max(0, --this.moveCounter);
+            }
+            if(this.moveCounter > this.limit) {
+              console.log('SHAKE');
+              this.saveTrigger();
+              this.moveCounter=0;
+            }
+          });
         }
-        this.accels = [acc.x, acc.y, acc.z];
-        let deltaX:number, deltaY:number, deltaZ:number;
-        deltaX = Math.abs(acc.x-this.lastX);
-        deltaY = Math.abs(acc.y-this.lastY);
-        deltaZ = Math.abs(acc.z-this.lastZ);
-        if(deltaX + deltaY + deltaZ > 3) {
-          this.moveCounter++;
-        } else {
-          this.moveCounter = Math.max(0, --this.moveCounter);
-        }
-        if(this.moveCounter > this.limit) {
-          console.log('SHAKE');
-          this.saveTrigger();
-          this.moveCounter=0;
-        }
-      });
-    }
   saveTrigger() {
     this.trigger = 'SHOOOK!';
     setTimeout(() => {this.trigger = ''}, 2000)
