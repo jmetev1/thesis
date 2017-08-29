@@ -16,7 +16,7 @@ export class Homepage {
   platform: Platform;
   accels: Array<number> = [0, 0, 0];
   limit:number;
-  plat:String = '';
+  plat:String = 'android';
   joltSize:number;
   others:Array<number> = [0, 0, 0];
   constructor(
