@@ -27,8 +27,6 @@ export class ListPage {
       this.plat = 'phone'
       if (this.plat === 'phone') {
         platform.ready().then(() => {
-          this.coord[0] = 2
-          this.coord[1] = 2
           let watch = this.geolocation.watchPosition();
           watch.subscribe((data) => {
             this.coord[0] = data.coords.latitude;
