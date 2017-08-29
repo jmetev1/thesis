@@ -19,7 +19,6 @@ export class Homepage {
   plat:String = '';
   joltSize:number;
   others:Array<number> = [0, 0, 0];
-
   constructor(
     private navController:NavController,
     platform:Platform,

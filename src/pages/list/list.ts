@@ -18,16 +18,14 @@ export class ListPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private nativeAudio: NativeAudio,
     private geolocation: Geolocation,
-    platform:Platform) {
-      this.plat = 'phone'
+    platform:Platform,
+    ) {
+      this.plat = ''
       if (this.plat === 'phone') {
         platform.ready().then(() => {
           this.coord[0] = 1
           this.coord[1] = 1
-          // this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3')
-          //   .then(onSuccess => console.log('loaded'));
           let watch = this.geolocation.watchPosition();
           watch.subscribe((data) => {
             this.coord[0] = data.coords.latitude;
@@ -36,11 +34,11 @@ export class ListPage {
         })
       }
     }
-  playSound() {
-    this.nativeAudio.play('uniqueId1').then(onSuccess => {
-      console.log('suc', onSuccess);
-    }, onError => console.log('error', onError));
-  }
+  // playSound() {
+  //   this.nativeAudio.play('uniqueId1').then(onSuccess => {
+  //     console.log('suc', onSuccess);
+  //   }, onError => console.log('error', onError));
+  // }
 }
 
 // export class ListPage {
