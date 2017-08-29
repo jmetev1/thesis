@@ -43,7 +43,7 @@ export class Homepage {
   check = () => {
     this.accels = [1,1,1]
     var subscription = this.deviceMotion.watchAcceleration({frequency:200})
-      .subscribe(acc => {
+      .subscribe((acc: DeviceMotionAccelerationData) => {
         this.accels = [2,2,2]
         if(!this.lastX) {
           this.lastX = acc.x;
