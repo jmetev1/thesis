@@ -14,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Geolocation } from '@ionic-native/geolocation';
+import { HttpModule } from '@angular/http'
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     FormsModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
