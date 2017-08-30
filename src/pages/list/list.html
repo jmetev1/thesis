@@ -8,6 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <div>Current lat is : {{coord[0]}}</div>
-  <div>Current long is : {{coord[1]}}</div>
+  <div name='progress'>Progress goes here 
+    {{progress}}
+  </div>
+  <button danger (click)="makeSound()">Make Sound</button>
 </ion-content>

@@ -13,20 +13,26 @@ import { FormsModule }   from '@angular/forms';
 })
 
 export class ListPage {
-  platform: Platform
-  coord: Array<number> = [0, 0]
+  platform:Platform
+  coord:Array<number> = [0, 0]
+  progress:String = '';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
     platform:Platform,
+    private nativeAudio: NativeAudio
     ) {
     platform.ready().then(() => {
-      let watch = this.geolocation.watchPosition();
-      watch.subscribe((data) => {
-        this.coord[0] = data.coords.latitude;
-        this.coord[1] = data.coords.longitude;
-      })
+      nativeAudio.preloadSimple(
+        'uniqueId1', '../../assets/sounds/beep15.mp3')
+        .then(onSuccess => this.progress = onSuccess,
+          onError => this.progress = onError)
     })
+  }
+  makeSound() {
+    this.nativeAudio.play('uniqueId1')
+      .then(onSuccess => this.progress = onSuccess,
+      onError => this.progress = onError)
   }
 }

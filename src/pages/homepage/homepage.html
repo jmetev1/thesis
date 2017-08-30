@@ -18,5 +18,7 @@
       <ion-item *ngFor="let acc of accels"> {{ acc }} </ion-item>
   </ion-list>
   <button danger (click)="saveTrigger()">Load More</button>
-  <!-- <button danger (click)="accOn()">Activate Pothole Detector</button> -->
+  <ion-list inset> Lat long and speed
+    <ion-item *ngFor="let cord of coord"> {{ cord }} </ion-item>
+</ion-list>
 </ion-content>
