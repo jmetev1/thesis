@@ -15,6 +15,8 @@ import { DeviceMotion } from '@ionic-native/device-motion';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http'
+import { RequestService } from './request.service'
+
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { HttpModule } from '@angular/http'
   providers: [
     NativeAudio,
     DeviceMotion,
+    RequestService,
     Geolocation,
     StatusBar,
     SplashScreen,
