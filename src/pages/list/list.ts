@@ -25,14 +25,14 @@ export class ListPage {
     ) {
     platform.ready().then(() => {
       nativeAudio.preloadSimple(
-        'uniqueId1', '../../assets/sounds/beep15.mp3')
+        'beep', '../../assets/sounds/beep15.mp3')
         .then(onSuccess => this.progress = onSuccess,
           onError => this.progress = onError)
     })
-  }
-  makeSound() {
-    this.nativeAudio.play('uniqueId1')
-      .then(onSuccess => this.progress = onSuccess,
-      onError => this.progress = onError)
+    const makeSound = () => {
+      nativeAudio.play('beep')
+        .then(onSuccess => this.progress = onSuccess,
+        onError => this.progress = onError)
+    }
   }
 }
