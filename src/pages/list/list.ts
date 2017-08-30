@@ -25,7 +25,7 @@ export class ListPage {
     ) {
     platform.ready().then(() => {
       nativeAudio.preloadSimple(
-        'beep', '../../assets/sounds/beep15.mp3')
+        'beep', '../assets/sounds/beep15.mp3')
         .then(onSuccess => this.progress = onSuccess,
           onError => this.progress = onError)
     })
