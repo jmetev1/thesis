@@ -10,6 +10,7 @@ import { IonicPage, NavController, Platform } from 'ionic-angular';
 
 export class MapPage implements AfterViewInit {
   @ViewChild('map') element;
+  error: any = 'no error';
 
   constructor(public navCtrl: NavController, public platform: Platform, public googleMaps: GoogleMaps) {}
   ngAfterViewInit() {
@@ -20,6 +21,7 @@ export class MapPage implements AfterViewInit {
   initMap() {
         let map: GoogleMap = this.googleMaps.create(this.element.nativeElement);
         map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
+          this.error = `line 24 ${data}`;
           let coordinates: LatLng = new LatLng(33.6396965, -84.4304574);
           let position = {
             target: coordinates,
@@ -40,36 +42,3 @@ export class MapPage implements AfterViewInit {
         })
       }
 }
-
-
-// platform.ready().then(() => {
-//   this.map = new GoogleMap('map', {
-//     'controls': {
-//       'compass': true,
-//       'myLocationButton': true,
-//       'indoorPicker': true,
-//     },
-//     'gestures': {
-//       'scroll': true,
-//       'tilt': true,
-//       'rotate': true,
-//       'zoom': true
-//     },
-//     'camera': {
-//       'target': {
-//         'lat': 43.0741904,
-//         'lng': -89.3809802
-//       },
-//       'tilt': 30,
-//       'zoom': 15,
-//       'bearing': 50
-//     }
-//   });
-
-//   this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
-//       console.log('Map is ready!');
-//   });
-
-// });
-// }
-
