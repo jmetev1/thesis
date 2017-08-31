@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { Homepage } from '../pages/homepage/homepage';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
+import { MapPage } from '../pages/map/map';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -16,14 +17,15 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http'
 import { RequestService } from './request.service'
-
+import { GoogleMap } from '@ionic-native/google-maps';
 
 @NgModule({
   declarations: [
     MyApp,
     Homepage,
     ItemDetailsPage,
-    ListPage
+    ListPage,
+    MapPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { RequestService } from './request.service'
     MyApp,
     Homepage,
     ItemDetailsPage,
-    ListPage
+    ListPage,
+    MapPage
   ],
   providers: [
     NativeAudio,
@@ -45,6 +48,7 @@ import { RequestService } from './request.service'
     Geolocation,
     StatusBar,
     SplashScreen,
+    GoogleMap,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

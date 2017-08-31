@@ -88,4 +88,9 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
+    <plugin name="com.googlemaps.ios" spec="https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk" />
+    <plugin name="cordova-plugin-googlemaps" spec="https://github.com/mapsplugin/cordova-plugin-googlemaps#multiple_maps">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyD-7sZXAKRsaZeUAwYTRmcWPP3TUP-YeTA" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyD-7sZXAKRsaZeUAwYTRmcWPP3TUP-YeTA" />
+    </plugin>
 </widget>
