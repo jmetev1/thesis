@@ -4,8 +4,8 @@ import {
   GoogleMapsEvent,
   GoogleMapOptions,
   CameraPosition,
-  // MarkerOptions,
-  // Marker
+  MarkerOptions,
+  Marker
  } from '@ionic-native/google-maps';
  import { Component } from "@angular/core/";
 
@@ -42,6 +42,7 @@ import {
      // Wait the MAP_READY before using any methods.
      this.map.one(GoogleMapsEvent.MAP_READY)
        .then(() => {
+         console.log('in then');
          this.error = 'Map is ready!';
 
          // Now you can use all methods safely.
@@ -62,6 +63,7 @@ import {
            });
 
        }).catch(err => {
+         console.log('in catch');
         this.error = 'ERRROROROROROROOROR';
        });
    }
