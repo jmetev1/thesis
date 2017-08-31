@@ -4,7 +4,11 @@ ion-app .nav_decor{
 
 
 page-map {
-  #map {
-    height: 100%
+  .body {
+    background-color: cadetblue;
+  }
+  #gmap {
+    height: 100%;
+    border: 10px;
   }
 }
