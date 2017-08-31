@@ -11,11 +11,12 @@ import { IonicPage, NavController, Platform } from 'ionic-angular';
 export class MapPage implements AfterViewInit {
   @ViewChild('map') element;
   error: any = 'no error';
-  constructor(public navCtrl: NavController, public platform: Platform, public googleMaps: GoogleMaps) {}
-  ngAfterViewInit() {
-    this.platform.ready().then(() => {
-      this.initMap();
-    })
+  constructor(public navCtrl: NavController, public platform: Platform, public googleMaps: GoogleMaps) {
+    ngAfterViewInit() {
+      this.platform.ready().then(() => {
+        this.initMap();
+      })
+    }
   }
   initMap() {
         let map: GoogleMap = this.googleMaps.create(this.element.nativeElement);
