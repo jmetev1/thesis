@@ -1,8 +1,8 @@
 import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, MarkerOptions, Marker } from '@ionic-native/google-maps';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
-//import IonicPage
-// @IonicPage()
+import { IonicPage, NavController, Platform } from 'ionic-angular';
+
+@IonicPage()
 @Component({
   selector: 'page-map',
   templateUrl: 'map.html',
@@ -25,7 +25,7 @@ export class MapPage implements AfterViewInit {
           let position = {
             target: coordinates,
             zoom: 17
-          };
+          }
           map.animateCamera(position);
 
           let markerOptions: MarkerOptions = {
@@ -38,6 +38,8 @@ export class MapPage implements AfterViewInit {
             .then((marker: Marker) => {
               marker.showInfoWindow();
           });
+        }).catch(err => {
+          this.error = `line 42 ${err}`;
         })
       }
 }
