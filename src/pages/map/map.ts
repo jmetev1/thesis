@@ -8,7 +8,7 @@ import {
   Marker
  } from '@ionic-native/google-maps';
  import { Component } from "@angular/core/";
- 
+
  @Component({
    selector: 'page-map',
    templateUrl: 'map.html'
@@ -16,16 +16,18 @@ import {
  export class MapPage {
    map: GoogleMap;
    mapElement: HTMLElement;
+   error: any = 'made it nowhere';
    constructor(private googleMaps: GoogleMaps) { }
- 
+
    ionViewDidLoad() {
+    this.error = 'in ionviewdidload';
     this.loadMap();
    }
- 
+
   loadMap() {
+    this.error = 'in loadmap';
      this.mapElement = document.getElementById('map');
- 
-     let mapOptions: GoogleMapOptions = {
+      let mapOptions: GoogleMapOptions = {
        camera: {
          target: {
            lat: 43.0741904,
@@ -35,14 +37,14 @@ import {
          tilt: 30
        }
      };
- 
+
      this.map = this.googleMaps.create(this.mapElement, mapOptions);
- 
+
      // Wait the MAP_READY before using any methods.
      this.map.one(GoogleMapsEvent.MAP_READY)
        .then(() => {
-         console.log('Map is ready!');
- 
+         this.error = 'Map is ready!';
+
          // Now you can use all methods safely.
          this.map.addMarker({
              title: 'Ionic',
@@ -59,7 +61,9 @@ import {
                  alert('clicked');
                });
            });
- 
+
+       }).catch(err => {
+        this.error = 'ERRROROROROROROOROR';
        });
    }
  }
