@@ -18,6 +18,7 @@ export class MapPage {
   ) {
     // ngAfterViewInit() {
       this.platform.ready().then(() => {
+        this.error = 'in platform ready';
         this.initMap();
       })
     // }
