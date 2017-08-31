@@ -33,38 +33,37 @@ import {
            lat: 43.0741904,
            lng: -89.3809802
          },
-         zoom: 18,
+         zoom: 15,
          tilt: 30
        }
      };
 
      this.map = this.googleMaps.create(this.mapElement, mapOptions);
-
      // Wait the MAP_READY before using any methods.
-    //  this.map.one(GoogleMapsEvent.MAP_READY)
-    //    .then(() => {
-    //      this.error = 'Map is ready!';
+     this.map.one(GoogleMapsEvent.MAP_READY)
+       .then(() => {
+         this.error = 'Map is ready!';
 
-    //      // Now you can use all methods safely.
-    //      this.map.addMarker({
-    //          title: 'Ionic',
-    //          icon: 'blue',
-    //          animation: 'DROP',
-    //          position: {
-    //            lat: 43.0741904,
-    //            lng: -89.3809802
-    //          }
-    //        })
-    //        .then(marker => {
-    //          marker.on(GoogleMapsEvent.MARKER_CLICK)
-    //            .subscribe(() => {
-    //              alert('clicked');
-    //            });
-    //        });
+         // Now you can use all methods safely.
+         this.map.addMarker({
+             title: 'Ionic',
+             icon: 'blue',
+             animation: 'DROP',
+             position: {
+               lat: 43.0741904,
+               lng: -89.3809802
+             }
+           })
+           .then(marker => {
+             marker.on(GoogleMapsEvent.MARKER_CLICK)
+               .subscribe(() => {
+                 alert('clicked');
+               });
+           });
 
-    //    }).catch(err => {
-    //     this.error = 'ERRROROROROROROOROR';
-    //    });
+       }).catch(err => {
+        this.error = 'ERRROROROROROROOROR';
+       });
    }
  }
 
