@@ -8,15 +8,19 @@ import { IonicPage, NavController, Platform } from 'ionic-angular';
   templateUrl: 'map.html',
 })
 
-export class MapPage implements AfterViewInit {
+export class MapPage {
   @ViewChild('map') element;
-  error: any = 'no error';
-  constructor(public navCtrl: NavController, public platform: Platform, public googleMaps: GoogleMaps) {
-    ngAfterViewInit() {
+  error: any = 'ERROR';
+  constructor(
+    public navCtrl: NavController,
+    public platform: Platform,
+    public googleMaps: GoogleMaps,
+  ) {
+    // ngAfterViewInit() {
       this.platform.ready().then(() => {
         this.initMap();
       })
-    }
+    // }
   }
   initMap() {
         let map: GoogleMap = this.googleMaps.create(this.element.nativeElement);
@@ -29,16 +33,16 @@ export class MapPage implements AfterViewInit {
           }
           map.animateCamera(position);
 
-          let markerOptions: MarkerOptions = {
-            position: coordinates,
-            icon: "assets/images/icons8-Marker-64.png",
-            title: 'Our first POI'
-          };
+          // let markerOptions: MarkerOptions = {
+          //   position: coordinates,
+          //   icon: "assets/images/icons8-Marker-64.png",
+          //   title: 'Our first POI'
+          // };
 
-          const marker = map.addMarker(markerOptions)
-            .then((marker: Marker) => {
-              marker.showInfoWindow();
-          });
+          // const marker = map.addMarker(markerOptions)
+          //   .then((marker: Marker) => {
+          //     marker.showInfoWindow();
+          // });
         }).catch(err => {
           this.error = `line 42 ${err}`;
         })
