@@ -24,9 +24,10 @@ export class MapPage {
     // }
   }
   initMap() {
+    this.error = 'in initmap';
         let map: GoogleMap = this.googleMaps.create(this.element.nativeElement);
         map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
-          this.error = `line 24 ${data}`;
+          this.error = `line 24`;
           let coordinates: LatLng = new LatLng(33.6396965, -84.4304574);
           let position = {
             target: coordinates,
@@ -45,7 +46,7 @@ export class MapPage {
           //     marker.showInfoWindow();
           // });
         }).catch(err => {
-          this.error = `line 42 ${err}`;
+          this.error = `line 42`;
         })
       }
 }
