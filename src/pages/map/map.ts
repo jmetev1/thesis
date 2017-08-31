@@ -1,8 +1,8 @@
 import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, MarkerOptions, Marker } from '@ionic-native/google-maps';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, Platform } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 
-@IonicPage()
+// @IonicPage()
 @Component({
   selector: 'page-map',
   templateUrl: 'map.html',
