@@ -20,16 +20,12 @@ export class MapPage implements AfterViewInit {
   initMap() {
 
         let map: GoogleMap = this.googleMaps.create(this.element.nativeElement);
-
         map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
-
           let coordinates: LatLng = new LatLng(33.6396965, -84.4304574);
-
           let position = {
             target: coordinates,
             zoom: 17
           };
-
           map.animateCamera(position);
 
           let markerOptions: MarkerOptions = {
