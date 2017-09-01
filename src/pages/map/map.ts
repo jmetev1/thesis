@@ -26,7 +26,7 @@ import {
 
   loadMap() {
     this.message = 'in loadmap';
-     this.mapElement = document.getElementById('gmap');
+     this.mapElement = document.getElementById('map');
       let mapOptions: GoogleMapOptions = {
        camera: {
          target: {
