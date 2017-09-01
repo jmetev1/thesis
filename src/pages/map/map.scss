@@ -1,10 +1,12 @@
-ion-app._gmaps_cdv_ .nav_decor{
+ion-app .nav_decor{
   background-color: transparent !important;
 }
 
 
 page-map {
-  #map {
-    height: 100%
+  #gmap {
+    height: 100%;
+    border: 10px;
   }
+
 }
