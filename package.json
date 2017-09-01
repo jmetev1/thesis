@@ -65,7 +65,7 @@
             "cordova-plugin-geolocation": {},
             "cordova-plugin-googlemaps": {
                 "API_KEY_FOR_ANDROID": "AIzaSyD-7sZXAKRsaZeUAwYTRmcWPP3TUP-YeTA",
-                "API_KEY_FOR_IOS": "AIzaSyD-7sZXAKRsaZeUAwYTRmcWPP3TUP-YeTA"
+                "API_KEY_FOR_IOS": "AIzaSyCttdYwRTYQLMHcpiPWkf2A17PWyP72ZU0"
             },
             "com.googlemaps.ios": {}
         },

@@ -16,16 +16,16 @@ import {
  export class MapPage {
    map: GoogleMap;
    mapElement: HTMLElement;
-   error: any = 'made it nowhere';
+   message: any = 'made it nowhere';
    constructor(private googleMaps: GoogleMaps) { }
 
    ionViewDidLoad() {
-    this.error = 'in ionviewdidload';
+    this.message = 'in ionviewdidload';
     this.loadMap();
    }
 
   loadMap() {
-    this.error = 'in loadmap';
+    this.message = 'in loadmap';
      this.mapElement = document.getElementById('gmap');
       let mapOptions: GoogleMapOptions = {
        camera: {
@@ -43,7 +43,7 @@ import {
      this.map.one(GoogleMapsEvent.MAP_READY)
        .then(() => {
          console.log('in then');
-         this.error = 'Map is ready!';
+         this.message = 'Map is ready!';
 
          // Now you can use all methods safely.
          this.map.addMarker({
@@ -64,10 +64,42 @@ import {
 
        }).catch(err => {
          console.log('in catch');
-        this.error = 'ERRROROROROROROOROR';
+        this.message = 'ERRROROROROROROOROR';
        });
    }
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, MarkerOptions, Marker } from '@ionic-native/google-maps';
 // import { AfterViewInit, Component, ViewChild } from '@angular/core';
