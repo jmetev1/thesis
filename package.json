@@ -23,6 +23,7 @@
         "@ionic-native/core": "3.12.1",
         "@ionic-native/device-motion": "^4.1.0",
         "@ionic-native/geolocation": "^4.2.0",
+        "@ionic-native/google-maps": "^4.2.1",
         "@ionic-native/native-audio": "^4.2.0",
         "@ionic-native/splash-screen": "3.12.1",
         "@ionic-native/status-bar": "3.12.1",
@@ -35,6 +36,7 @@
         "cordova-plugin-device": "^1.1.4",
         "cordova-plugin-device-motion": "^1.2.5",
         "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
         "cordova-plugin-nativeaudio": "^3.0.9",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.2",
@@ -61,7 +63,10 @@
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
             "cordova-plugin-nativeaudio": {},
-            "cordova-plugin-geolocation": {}
+            "cordova-plugin-geolocation": {},
+            "cordova-plugin-googlemaps": {
+                "API_KEY_FOR_ANDROID": "AIzaSyCDkBmhOoNsGrpIXsS4R-CT4IoVLrYuATU"
+            }
         },
         "platforms": [
             "android",

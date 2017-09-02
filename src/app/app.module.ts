@@ -5,8 +5,10 @@ import { FormsModule }   from '@angular/forms';
 import { MyApp } from './app.component';
 
 import { Homepage } from '../pages/homepage/homepage';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
+import { MapPage } from '../pages/map/map';
+import { GoogleMaps } from '@ionic-native/google-maps';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -22,7 +24,7 @@ import { RequestService } from './request.service'
   declarations: [
     MyApp,
     Homepage,
-    ItemDetailsPage,
+    MapPage,
     ListPage
   ],
   imports: [
@@ -35,7 +37,7 @@ import { RequestService } from './request.service'
   entryComponents: [
     MyApp,
     Homepage,
-    ItemDetailsPage,
+    MapPage,
     ListPage
   ],
   providers: [
@@ -44,6 +46,7 @@ import { RequestService } from './request.service'
     RequestService,
     Geolocation,
     StatusBar,
+    GoogleMaps,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

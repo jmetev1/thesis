@@ -10,14 +10,10 @@ import { RequestService } from '../../app/request.service'
   templateUrl: 'homepage.html'
 })
 export class Homepage {
-  deviceMotion: DeviceMotion
-  private lastX:number;
-  private lastY:number;
-  private lastZ:number;
   private moveCounter:number = 0;
-  accels: Array<number> = [0, 0, 0];
+  accels: Array<number>
   limit:number;
-  joltSize:number;
+  joltSize:number = 3;
   trigger:String = 'none'
   coord: Array<number> = [0, 0, 0]
   total: Number = 0
@@ -26,78 +22,95 @@ export class Homepage {
   constructor(
   private navController:NavController,
   platform:Platform,
-  deviceMotion:DeviceMotion,
+  private deviceMotion:DeviceMotion,
   private requestService: RequestService,
   private geolocation: Geolocation) {
-
     this.getPotholes()
     this.limit = 2;
-    this.joltSize = 1;
     platform.ready().then(() => {
-      let watch = this.geolocation.watchPosition();
-      watch.subscribe((data) => {
-        this.coord[0] = data.coords.latitude
-        this.coord[1] = data.coords.longitude
-        this.coord[2] = data.coords.speed
-      })
+      this.outside()
       if (platform.is('cordova') === true) {
-        const check = () => {
-          this.accels = [1,1,1]
-          deviceMotion.watchAcceleration({frequency:200})
-            .subscribe(acc => {
-              this.accels = [2,2,2]
-              if(!this.lastX) {
-                this.lastX = acc.x;
-                this.lastY = acc.y;
-                this.lastZ = acc.z;
-                return;
-              }
-              this.accels = [acc.x, acc.y, acc.z];
-              let deltaX:number, deltaY:number, deltaZ:number;
-              deltaX = Math.abs(acc.x-this.lastX);
-              deltaY = Math.abs(acc.y-this.lastY);
-              deltaZ = Math.abs(acc.z-this.lastZ);
-              let total = deltaX + deltaY + deltaZ
-              if(deltaX + deltaY + deltaZ > 3) {
-                this.moveCounter++;
-              } else {
-                this.moveCounter = Math.max(0, --this.moveCounter);
-              }
-              if(this.moveCounter > this.limit) {
-                console.log('SHAKE');
-                this.saveTrigger(total);
-                this.moveCounter=0;
-              }
-            });
-          }
-        check()
-      } else {
-        // setInterval(() =>  this.saveTrigger(0), 3000)
+        this.check()
       }
     })
   }
-  saveTrigger(shake: Number) {
+  outside() {
+    let watch = this.geolocation.watchPosition()
+    watch.subscribe((data) => {
+      this.coord[0] = data.coords.latitude
+      this.coord[1] = data.coords.longitude
+      this.coord[2] = data.coords.speed || -10
+    })
+  }
+  count = 0
+  saveImpact(force:Number) {
     let lat = 29.927594 + Math.random() * .08865
     let long = -90.132690 + Math.random() * .196903
     this.requestService.createPothole({
-      name: 'Other Truck Sinker',
+      name: this.name(),
       lat: lat,
-      lng: long}).then(
-      reply => this.trigger += reply
-    )
-    // this.trigger = 'SHOOOK!';
-    // setTimeout(() => {this.trigger = ''}, 2000)
+      lng: long})
+      .then(hole => {
+        this.requestService.createImpact({
+          force: force,
+          users_id: 1,
+          pothole_id: hole.id
+        }).then(impact => console.log(impact))
+    })
   }
-  getPotholes(): void {
-    this.requestService
-      .getPotholes()
+  saveTrigger() {
+    this.count++
+    this.trigger = this.count.toString();
+    let lat = 29.927594 + Math.random() * .08865
+    let long = -90.132690 + Math.random() * .196903
+    this.requestService.createPothole({
+      name: this.name(),
+      lat: lat,
+      lng: long})
+      .then(hole => console.log(hole))
+    }
+    getPotholes(): void {
+      this.requestService.getPotholes()
       .then(values => this.holes = values)
+    }
+    name() {
+      let first = ['cavern', 'pit', 'hole', 'jaws', 'crater', 'pit',
+      'rut', 'bump', 'dent']
+      let second = ['despair', 'lost cars', 'infinite depth',
+      'Moria', 'tremendous damage', 'get your checkbook out',
+      'desperation', 'disheartenment', 'dashed hopes']
+      const random = () => Math.floor(Math.random() * first.length)
+      return first[random()] + ' of ' + second[random()]
+    }
+    check = () => {
+      let lastX, lastY, lastZ
+      this.deviceMotion.watchAcceleration({frequency:200})
+        .subscribe(acc => {
+          if(!lastX) {
+            lastX = acc.x;
+            lastY = acc.y;
+            lastZ = acc.z;
+            return;
+          }
+          let deltaX, deltaY, deltaZ
+          deltaX = Math.abs(acc.x-lastX);
+          deltaY = Math.abs(acc.y-lastY);
+          deltaZ = Math.abs(acc.z-lastZ);
+          this.accels = [deltaX, deltaY, deltaZ];
+          if(deltaX + deltaY + deltaZ > this.joltSize) {
+            this.total = deltaX + deltaY + deltaZ
+            this.moveCounter++;
+          } else {
+            this.moveCounter = Math.max(0, --this.moveCounter);
+          }
+          if(this.moveCounter > this.limit) {
+            this.saveImpact(this.total)
+            // this.saveTrigger();
+            this.moveCounter=0;
+          }
+          lastX = acc.x;
+          lastY = acc.y;
+          lastZ = acc.z;
+      });
+    }
   }
-  fakeLoc() {
-    // this.coord[0] = lat
-    // this.coord[1] = long
-    // this.coord[2] = Math.random() * 70
-    // return this.coord
-  }
-
-}
