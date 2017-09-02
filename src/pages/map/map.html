@@ -1,17 +1,32 @@
 
 <ion-header>
+    <ion-navbar>
+      <ion-title>
+        Ionic Blank
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <div class="before">before</div>
+    <div #map id="map" style="height:100%;"></div>
+  </ion-content>
 
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Pothole Map</ion-title>
-  </ion-navbar>
 
-</ion-header>
+<!-- <ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Map</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)="addMarker()">
+            <ion-icon name="add"></ion-icon>Add Marker
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-list inset> My Potholes
+      <ion-item *ngFor="let hole of holes"> {{ hole.name+' '+hole.lat}} </ion-item>
+  </ion-list>  -->
 
-
-<ion-content class="page">
-  <div #map id="map">MAP SHOULD BE HERE</div>
-  <div>{{message}}</div>
-</ion-content>

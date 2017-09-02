@@ -3,13 +3,18 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>My First List</ion-title>
+    <ion-title>Greatest Hits</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div name='progress'>Progress goes here 
-    {{progress}}
-  </div>
-  <button danger (click)="makeSound()">Make Sound</button>
+  <ion-list inset>
+      <ion-item text-wrap *ngFor="let impact of impacts">
+        You hit pothole #{{impact.pothole_id}} with a force of
+        {{(impact.force/9.8).toString().slice(0,3)}} G's on
+        {{impact.date}}
+
+        <!-- {{Math.floor(10.7)}} -->
+      </ion-item>
+  </ion-list>
 </ion-content>

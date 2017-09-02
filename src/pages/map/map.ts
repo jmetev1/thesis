@@ -8,42 +8,48 @@ import {
   Marker
  } from '@ionic-native/google-maps';
  import { Component } from "@angular/core/";
-
+ 
+ import { Platform } from 'ionic-angular';
  @Component({
-   selector: 'page-map',
+   selector: 'Map-page',
    templateUrl: 'map.html'
  })
  export class MapPage {
    map: GoogleMap;
    mapElement: HTMLElement;
-   message: any = 'made it nowhere';
-   constructor(private googleMaps: GoogleMaps) { }
-
-   ionViewDidLoad() {
-    this.message = 'in ionviewdidload';
-    this.loadMap();
+   constructor(private googleMaps: GoogleMaps, public platform: Platform) {
+ 
+     // Wait the native plugin is ready.
+     platform.ready().then(() => {
+       this.loadMap();
+     });
    }
-
+ 
+   // Don't use the ngAfterViewInit(). The native plugin is not ready.
+   //ngAfterViewInit() {
+   // this.loadMap();
+   //}
+ 
   loadMap() {
-    this.message = 'in loadmap';
      this.mapElement = document.getElementById('map');
-      let mapOptions: GoogleMapOptions = {
+ 
+     let mapOptions: GoogleMapOptions = {
        camera: {
          target: {
            lat: 43.0741904,
            lng: -89.3809802
          },
-         zoom: 15,
+         zoom: 18,
          tilt: 30
        }
      };
-
+ 
      this.map = this.googleMaps.create(this.mapElement, mapOptions);
+ 
      // Wait the MAP_READY before using any methods.
      this.map.one(GoogleMapsEvent.MAP_READY)
        .then(() => {
-         console.log('in then');
-         this.message = 'Map is ready!';
+         console.log('Map is ready!');
 
          // Now you can use all methods safely.
          this.map.addMarker({
@@ -61,10 +67,6 @@ import {
                  alert('clicked');
                });
            });
-
-       }).catch(err => {
-         console.log('in catch');
-        this.message = 'ERRROROROROROROOROR';
        });
    }
  }
@@ -77,62 +79,52 @@ import {
 
 
 
+// import { Component, ViewChild, ElementRef } from '@angular/core';
+// import { NavController, NavParams } from 'ionic-angular';
 
+// declare var google;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, MarkerOptions, Marker } from '@ionic-native/google-maps';
-// import { AfterViewInit, Component, ViewChild } from '@angular/core';
-// import { IonicPage, NavController, Platform } from 'ionic-angular';
-
-// @IonicPage()
 // @Component({
-//   selector: 'page-map',
-//   templateUrl: 'map.html',
+//  selector: 'Map-page',
+//  templateUrl: 'map.html'
 // })
-
 // export class MapPage {
-//   @ViewChild('map') element;
-//   error: any = 'ERROR';
-//   constructor( public navCtrl: NavController, public platform: Platform, public googleMaps: GoogleMaps,) {
-//     const initMap = () => {
-//       this.error = 'in initmap';
-//       let map: GoogleMap = googleMaps.create(this.element.nativeElement);
-//       map.one(GoogleMapsEvent.MAP_READY).then((data: any) => {
-//         this.error = `line 24`;
-//         let coordinates: LatLng = new LatLng(33.6396965, -84.4304574);
-//         let position = {
-//           target: coordinates,
-//           zoom: 17
-//         }
-//         map.animateCamera(position);
-//       }).catch(err => {
-//         this.error = `line 42`;
-//       })
-//     }
-//       this.platform.ready().then(() => {
-//         this.error = 'in platform ready';
-//         initMap();
-//       })
-//     }
+//  @ViewChild('map') 
+//  mapElement: ElementRef;
+//  map: any;
+
+//  constructor(public navCtrl: NavController) {
+
+//  }
+
+//  ionViewDidLoad(){
+//    console.log('in view did load')
+//    this.loadMap();
+//  }
+//  loadMap(){
+  
+//      let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+  
+//      let mapOptions = {
+//        center: latLng,
+//        zoom: 15,
+//        mapTypeId: google.maps.MapTypeId.ROADMAP
+//      }
+  
+//      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+  
+//    }
+//  }
+//  loadMap(){
+//    let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+
+//    let mapOptions = {
+//      center: latLng,
+//      zoom: 15,
+//      mapTypeId: google.maps.MapTypeId.ROADMAP
+//    }
+
+//    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+//  }
 // }

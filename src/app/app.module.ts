@@ -5,9 +5,10 @@ import { FormsModule }   from '@angular/forms';
 import { MyApp } from './app.component';
 
 import { Homepage } from '../pages/homepage/homepage';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { MapPage } from '../pages/map/map';
+import { GoogleMaps } from '@ionic-native/google-maps';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,9 +24,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
   declarations: [
     MyApp,
     Homepage,
-    ItemDetailsPage,
-    ListPage,
-    MapPage
+    MapPage,
+    ListPage
   ],
   imports: [
     BrowserModule,
@@ -37,9 +37,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
   entryComponents: [
     MyApp,
     Homepage,
-    ItemDetailsPage,
-    ListPage,
-    MapPage
+    MapPage,
+    ListPage
   ],
   providers: [
     NativeAudio,
@@ -47,6 +46,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     RequestService,
     Geolocation,
     StatusBar,
+    GoogleMaps,
     SplashScreen,
     GoogleMaps,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
