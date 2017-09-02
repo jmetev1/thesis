@@ -50,7 +50,7 @@ import {
      this.map.one(GoogleMapsEvent.MAP_READY)
        .then(() => {
          console.log('Map is ready!');
- 
+
          // Now you can use all methods safely.
          this.map.addMarker({
              title: 'Ionic',
@@ -67,7 +67,6 @@ import {
                  alert('clicked');
                });
            });
- 
        });
    }
  }
