@@ -43,6 +43,12 @@ export class RequestService {
       .then(response => response.json().data as Pothole[])
       .catch(this.handleError)
   }
+  getPothole(lat, lng) {
+    return this.http.get(`http://54.163.239.254:3000/pothole?lat=${lat}&&lng=${lng}`)
+    .toPromise()
+    .then(res => res.json().data as Pothole)
+    .catch(this.handleError);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
