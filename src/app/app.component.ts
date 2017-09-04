@@ -18,7 +18,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage = MapPage;
+  rootPage = Homepage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
