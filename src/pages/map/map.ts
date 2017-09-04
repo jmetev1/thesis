@@ -1,10 +1,11 @@
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions,
-  CameraPosition, MarkerOptions,  Marker
+  // CameraPosition, MarkerOptions,   Marker
  } from '@ionic-native/google-maps';
 import { Component } from "@angular/core/";
 import { Geolocation } from '@ionic-native/geolocation';
 import { Platform } from 'ionic-angular';
 import { RequestService } from '../../app/request.service'
+import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'Map-page',
@@ -14,10 +15,20 @@ export class MapPage {
   map: GoogleMap;
   holes: any = [1,1,1]
   mapElement: HTMLElement;
+
   constructor(private googleMaps: GoogleMaps, public platform: Platform,
   private requestService:RequestService, private geolocation: Geolocation,
+  public events:Events
 ) {
-    platform.ready().then(() => {
+  events.subscribe('menu:opened', () => {
+    console.log('opened')
+    this.map.setClickable(false)
+  });
+  events.subscribe('menu:closed', () => {
+    console.log('closed')
+    this.map.setClickable(true)
+  });
+  platform.ready().then(() => {
       this.outside();
     });
   }
@@ -33,7 +44,6 @@ export class MapPage {
             lat: data.coords.latitude,
             lng: data.coords.longitude
           },
-          //was 18 before, too close
           zoom: 12,
           tilt: 30
         }
