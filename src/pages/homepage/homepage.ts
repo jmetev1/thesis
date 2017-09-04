@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, /* NavParams,*/ Platform } from 'ionic-angular';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { Geolocation } from '@ionic-native/geolocation';
 import { RequestService } from '../../app/request.service'
@@ -20,7 +20,7 @@ export class Homepage {
   holes: any = [1,1,1]
 
   constructor(
-  private navController:NavController,
+  // private navController:NavController,
   platform:Platform,
   private deviceMotion:DeviceMotion,
   private requestService: RequestService,
@@ -35,11 +35,14 @@ export class Homepage {
     })
   }
   outside() {
-    let watch = this.geolocation.watchPosition()
+    let watch = this.geolocation.watchPosition({
+      enableHighAccuracy: true
+    })
     watch.subscribe((data) => {
       this.coord[0] = data.coords.latitude
       this.coord[1] = data.coords.longitude
       this.coord[2] = data.coords.speed || -10
+      this.coord[3] = data.coords.heading
     })
   }
   count = 0
