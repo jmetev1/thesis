@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { Geolocation } from '@ionic-native/geolocation';
-import { RequestService } from '../../app/request.service'
+import { RequestService } from '../../app/request.service';
 
 @IonicPage()
 @Component({
@@ -46,17 +46,28 @@ export class Homepage {
   saveImpact(force:Number) {
     let lat = 29.927594 + Math.random() * .08865
     let long = -90.132690 + Math.random() * .196903
-    this.requestService.createPothole({
-      name: this.name(),
-      lat: lat,
-      lng: long})
-      .then(hole => {
-        this.requestService.createImpact({
-          force: force,
-          users_id: 1,
-          pothole_id: hole.id
-        }).then(impact => console.log(impact))
-    })
+    this.requestService.getPothole(lat, long)
+      .then(data => {
+        if (data.length === 0) {
+          this.requestService.createPothole({
+            name: this.name(),
+            lat: lat,
+            lng: long})
+            .then(hole => {
+              this.requestService.createImpact({
+                force: force,
+                users_id: 1,
+                pothole_id: hole.id
+              }).then(impact => console.log(impact))
+          })
+        } else {
+          this.requestService.createImpact({
+            force: force,
+            users_id: 1,
+            pothole_id: data[0].id
+          }).then(impact => console.log(impact));
+        }
+      })
   }
   saveTrigger() {
     this.count++
