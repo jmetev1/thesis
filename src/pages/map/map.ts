@@ -71,19 +71,19 @@ export class MapPage {
           enableHighAccuracy: true
         })
         watch.subscribe((data) => {
-          this.map.addMarker({
-            title: "Your Location",
-            // icon: 'red',
-            // {
-            //   path: google.maps.SymbolPath.CIRCLE,
-            //   scale: 10
-            // },
-            animation: 'DROP',
-            position: {
-              lat: data.coords.latitude,
-              lng: data.coords.longitude
-            }
-          })
+          // this.map.addMarker({
+          //   title: "Your Location",
+          //   // icon: 'red',
+          //   // {
+          //   //   path: google.maps.SymbolPath.CIRCLE,
+          //   //   scale: 10
+          //   // },
+          //   animation: 'DROP',
+          //   position: {
+          //     lat: data.coords.latitude,
+          //     lng: data.coords.longitude
+          //   }
+          // })
         })
       })
     })

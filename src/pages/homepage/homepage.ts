@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, /* NavParams,*/ Platform } from 'ionic-angular';
+import { IonicPage, /*NavController,  NavParams,*/ Platform } from 'ionic-angular';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { Geolocation } from '@ionic-native/geolocation';
 import { RequestService } from '../../app/request.service'
@@ -35,6 +35,7 @@ export class Homepage {
     })
   }
   outside() {
+  console.log('homepage outside func')
     let watch = this.geolocation.watchPosition({
       enableHighAccuracy: true
     })
