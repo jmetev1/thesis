@@ -18,7 +18,8 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpModule } from '@angular/http'
 import { RequestService } from './request.service'
-import { GoogleMaps } from '@ionic-native/google-maps';
+import { SmartAudio } from '../providers/smart-audio/smart-audio';
+
 
 @NgModule({
   declarations: [
@@ -48,8 +49,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
     StatusBar,
     GoogleMaps,
     SplashScreen,
-    GoogleMaps,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SmartAudio
   ]
 })
 export class AppModule {}
