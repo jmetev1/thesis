@@ -3,6 +3,7 @@ import { IonicPage, /*NavController,  NavParams,*/ Platform } from 'ionic-angula
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { RequestService } from '../../app/request.service'
 import { SmartAudio } from '../../providers/smart-audio/smart-audio'
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 @IonicPage()
 @Component({
@@ -16,10 +17,11 @@ export class Homepage {
   joltSize:number = 10;
   trigger:String = 'none'
   coord: Array<number> = [0, 0, 0]
-  total: Number = 0
+  total: number = 0
   holes: any = [1,1,1]
 
   constructor(
+  private tts: TextToSpeech,
   platform:Platform,
   private deviceMotion:DeviceMotion,
   private requestService: RequestService,
@@ -27,15 +29,18 @@ export class Homepage {
     this.getPotholes()
     platform.ready().then(() => {
       smartAudio.preload('sound', 'assets/sounds/beep15.mp3')
-      // audio/clickSound.mp3'
       if (platform.is('cordova') === true) {
         this.check()
       }
     })
   }
   count = 0
-  saveImpact(force:Number) {
-    this.smartAudio.play('sound');
+  saveImpact(force:number) {
+    // this.smartAudio.play('sound');
+    let rounded = Math.floor(force)
+    console.log(rounded, 'is rounded')
+    this.tts.speak(`That impact was ${rounded} gees`)
+    
     console.log('played')
     let lat = 29.927594 + Math.random() * .08865
     let long = -90.132690 + Math.random() * .196903

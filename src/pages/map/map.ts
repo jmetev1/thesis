@@ -23,12 +23,8 @@ export class MapPage {
   constructor(private googleMaps: GoogleMaps, public platform: Platform,
   private requestService:RequestService, private geolocation: Geolocation,
   public events:Events
-) { events.subscribe('menu:opened', () => {
-      this.map.setClickable(false)
-    });
-    events.subscribe('menu:closed', () => {
-      this.map.setClickable(true)
-    });
+) { events.subscribe('menu:opened', () => this.map.setClickable(false))
+    events.subscribe('menu:closed', () => this.map.setClickable(true))
   }
   ionViewDidEnter(){
     this.platform.ready().then(() => {
