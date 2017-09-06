@@ -22,10 +22,14 @@ export class ListPage {
     requestService: RequestService,
   ) {
     requestService.getPotholes()
-    .then(values => this.holes = values)
+    .then(values => {
+      console.log(values)
+      this.holes = values
+    })
 
     requestService.getImpacts()
     .then(hits => {
+      console.log(hits);
       this.impacts = hits.map(e => {
         e.date = e.date.slice(5, 7) + '-'+ e.date.slice(8, 10) + '-'+
         e.date.slice(0,4)
