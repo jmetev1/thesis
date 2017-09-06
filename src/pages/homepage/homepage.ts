@@ -48,7 +48,7 @@ export class Homepage {
     let long = -90.132690 + Math.random() * .196903
     this.requestService.getPothole(lat, long)
       .then(data => {
-        if (data.length === 0) {
+        if (!data) {
           this.requestService.createPothole({
             name: this.name(),
             lat: lat,
@@ -56,14 +56,14 @@ export class Homepage {
             .then(hole => {
               this.requestService.createImpact({
                 force: force,
-                users_id: 1,
+                users_id: null,
                 pothole_id: hole.id
               }).then(impact => console.log(impact))
           })
         } else {
           this.requestService.createImpact({
             force: force,
-            users_id: 1,
+            users_id: null,
             pothole_id: data[0].id
           }).then(impact => console.log(impact));
         }

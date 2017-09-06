@@ -16,7 +16,7 @@ export class Impact {
 @Injectable()
 export class RequestService {
   private headers = new Headers({'Content-Type': 'application/json'});
-  private url = 'http://54.163.239.254:3000/'
+  private url = 'http://34.228.14.80:3030/'
   constructor(private http: Http) { }
 
   createImpact(info: any): any {
@@ -32,19 +32,19 @@ export class RequestService {
     .then(res => res.json()).catch(this.handleError);
   }
   getImpacts() {
-    return this.http.get('http://54.163.239.254:3000/impact')
+    return this.http.get(`${this.url}impact`)
       .toPromise()
-      .then(response => response.json().data as Impact[])
+      .then(response => response.json().slice(0, 25) as Impact[])
       .catch(this.handleError)
   }
   getPotholes() {
-    return this.http.get('http://54.163.239.254:3000/pothole')
+    return this.http.get(`${this.url}pothole`)
       .toPromise()
-      .then(response => response.json().data as Pothole[])
+      .then(response => response.json().slice(0, 25) as Pothole[])
       .catch(this.handleError)
   }
   getPothole(lat, lng) {
-    return this.http.get(`http://54.163.239.254:3000/pothole?lat=${lat}&&lng=${lng}`)
+    return this.http.get(`${this.url}pothole?lat=${lat}&&lng=${lng}`)
     .toPromise()
     .then(res => res.json().data as Pothole)
     .catch(this.handleError);
