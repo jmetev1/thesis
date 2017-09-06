@@ -16,7 +16,7 @@ export class Impact {
 @Injectable()
 export class RequestService {
   private headers = new Headers({'Content-Type': 'application/json'});
-  private url = 'http://34.228.14.80:3030/'
+  private url = 'http://54.227.175.5'
   constructor(private http: Http) { }
 
   createImpact(info: any): any {
