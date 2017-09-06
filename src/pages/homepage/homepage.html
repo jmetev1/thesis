@@ -15,12 +15,18 @@
   <div>JoltSize is : {{joltSize}}</div>
   <input [(ngModel)]="joltSize" placeholder="new joltSize">
   <ion-list inset> Last saved impact
-      <!-- <ion-item *ngFor="let acc of accels"> {{ acc }} </ion-item> -->
       <div>G force was {{total}}</div>
   </ion-list>
-  <button danger (click)="saveImpact(100)">Save Another/playsound</button>
+  <ion-list inset> Location
+    <div> {{coords.latitude+' '+ coords.longitude}}</div>
+  </ion-list>
+  <div>Use Real Location? : {{realGeo}}</div>
+  <button danger (click)="realGeo=!realGeo">Toggle Fake Location</button>
+  <button danger (click)="saveImpact([15, 12.5, 45])">Save Another/playsound</button>
   <button danger (click)="getPotholes()">Get Potholes</button>
-  <!-- <ion-list inset> My Potholes
-    <ion-item *ngFor="let hole of holes"> {{ hole.name+' '+hole.lat}} </ion-item>
-  </ion-list> -->
+  <ion-list> About to save this impact
+    <ion-item *ngFor="let a of toSave">
+      {{a}}
+    </ion-item>
+  </ion-list>
 </ion-content>
