@@ -4,6 +4,7 @@ import { DeviceMotion } from '@ionic-native/device-motion';
 import { RequestService } from '../../app/request.service'
 import { SmartAudio } from '../../providers/smart-audio/smart-audio'
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @IonicPage()
 @Component({
