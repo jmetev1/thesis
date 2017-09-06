@@ -14,10 +14,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { DeviceMotion } from '@ionic-native/device-motion';
-import { NativeAudio } from '@ionic-native/native-audio';
-import { Geolocation } from '@ionic-native/geolocation';
+import { NativeAudio } from '@ionic-native/native-audio'
+import { Geolocation } from '@ionic-native/geolocation'
 import { HttpModule } from '@angular/http'
 import { RequestService } from './request.service'
+import { SmartAudio } from '../providers/smart-audio/smart-audio'
+import { TextToSpeech } from '@ionic-native/text-to-speech'
 
 @NgModule({
   declarations: [
@@ -41,14 +43,15 @@ import { RequestService } from './request.service'
   ],
   providers: [
     NativeAudio,
+    TextToSpeech,
     DeviceMotion,
     RequestService,
     Geolocation,
     StatusBar,
     GoogleMaps,
     SplashScreen,
-    GoogleMaps,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SmartAudio
   ]
 })
 export class AppModule {}
