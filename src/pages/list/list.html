@@ -11,10 +11,7 @@
   <ion-list inset>
       <ion-item text-wrap *ngFor="let impact of impacts">
         You hit pothole #{{impact.pothole_id}} with a force of
-        {{(impact.force/9.8).toString().slice(0,3)}} G's on
-        {{impact.date}}
-
-        <!-- {{Math.floor(10.7)}} -->
+        {{impact.force}} Gs on {{impact.date}}
       </ion-item>
   </ion-list>
 </ion-content>
