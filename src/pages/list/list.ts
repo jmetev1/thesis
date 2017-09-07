@@ -31,7 +31,8 @@ export class ListPage {
       this.impacts = hits.map(e => {
         e.date = e.date.slice(5, 7) + '-'+ e.date.slice(8, 10) + '-'+
         e.date.slice(0,4)
-        e.force = e.force.toFixed(e.force/9.8, 1)
+        e.force = e.force.reduce((a, c) => a + (c/9.8).toString().slice(0,3)+',', '')
+        console.log(e.force)
         return e
       })
     })
