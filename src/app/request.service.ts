@@ -39,7 +39,7 @@ export class RequestService {
   getPotholes() {
     return this.http.get(`${this.url}pothole`)
       .toPromise()
-      .then(response => response.json().slice(0, 25) as Pothole[])
+      .then(response => response.json() as Pothole[])
       .catch(this.handleError)
   }
   getPothole(lat, lng) {

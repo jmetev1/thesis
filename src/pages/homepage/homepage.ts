@@ -32,21 +32,22 @@ export class Homepage {
   ionViewDidEnter(){
     this.platform.ready().then(() => {
       // smartAudio.preload('sound', 'assets/sounds/beep15.mp3')
-      this.platform.is('cordova') ? this.watchLoc() : 1
+      this.watchLoc()
     })
   }
   watchLoc() {
     this.geolocation.watchPosition({enableHighAccuracy: true})
     .subscribe(data => { this.coords = data.coords
-      // !this.trackerStarted ? this.tracker() : 1
-      this.trackerStarted = true
-      !this.joltWatcherStarted ? this.joltWatcher() : 1
-      this.joltWatcherStarted = true
+      // this.requestService.getPotholes().then(potholes => {
+      //   !this.trackerStarted ? (
+      //     this.tracker(potholes), this.trackerStarted = true) : 1
+      // })
+      if (!this.joltWatcherStarted) {
+        this.platform.is('cordova') ? (
+          this.joltWatcher(), this.joltWatcherStarted = true
+        ) : 1
+      }
     })
-  }
-  getPotholes(): void {
-    this.requestService.getPotholes()
-    .then(values => this.holes = values)
   }
   joltWatcher = () => {
     let lastX, lastY, lastZ
@@ -56,10 +57,10 @@ export class Homepage {
       Math.abs(acc.y-lastY) + Math.abs(acc.z-lastZ)
       total > this.joltSize ? (
         this.moveCounter++, this.jolts.push(total)
-    ) : (
-      this.moveCounter = Math.max(0, --this.moveCounter),
-      this.jolts = []
-    )
+      ) : (
+        this.moveCounter = Math.max(0, --this.moveCounter),
+        this.jolts = []
+      )
       if(this.moveCounter > this.limit) {
         this.saveImpact(this.jolts)
         this.jolts = []
@@ -108,7 +109,7 @@ export class Homepage {
       }
     })
   }
-  getDistanceFromLatLonInMi(lat1,lon1,lat2,lon2) {
+  getDist(lat1,lon1,lat2,lon2) {
     const deg2rad = (deg) => deg * (Math.PI/180)
     var dLat = deg2rad(lat2-lat1);  // deg2rad below
     var dLon = deg2rad(lon2-lon1);
@@ -117,27 +118,39 @@ export class Homepage {
     Math.sin(dLon/2) * Math.sin(dLon/2);
     return 7919.204 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   }
+  getPotholes(): void {
+    this.requestService.getPotholes()
+    .then(values => this.holes = values)
+  }
 
+  // tracker(holes) {
+  //   let watching = {'1': {t: 1, d: .5, st: []},
+  //                   '2': {t: 5, d: 1.5, st: holes.slice()},
+  //                   '3': {t: 10, d: 3, st: []}}
+  //   const sorter = (holes, which) => { //sorting
+  //     console.log('sorter called', holes, which)
+  //     let sorted = {'1': [],'2': [], '3': []}
+  //     holes.forEach(h => {
+  //       let dToHole = this.getDist(this.coords.latitude, this.coords.longitude, h.lat, h.lng)
+  //       for (let key in watching) {
+  //         dToHole < watching[key].d ? sorted[key].push(h) : 1
+  //       }
+  //     })
+  //     console.table(sorted)
+  //   }
 
-
-  // tracker() {
-  //   let dist = 1.5
-  //   let {latitude, longitude} = this.coords //user location
-  //   const lessThan2Minutes = holes.reduce((acc, cur) => {
-  //     let d = this.getDistanceFromLatLonInMi(latitude, longitude,
-  //       cur.lat, cur.lng)
-  //       console.log(d, cur.name)
-  //       return (d < dist ? acc.concat(cur) : acc);
-  //   }, [])
-  //   console.log(lessThan2Minutes)
-  //   this.tracker()
+  //   for (let key in watching) {
+  //     setInterval(() => {
+  //       // console.log('running for', key)
+  //       sorter(watching[key].st, key)
+  //     }, watching[key].t * 1000)
+  //   }
+  //   setTimeout(() => {
+  //     this.requestService.getPotholes().then(potholes => {
+  //       this.tracker(potholes)
+  //     })
+  //   }, 60000)
   // }
-
-
-
-
-
-
   name() {
     let first = ['cavern', 'pit', 'hole', 'jaws', 'crater', 'pit',
     'rut', 'bump', 'dent']
