@@ -23,6 +23,7 @@ import { SmartAudio } from '../providers/smart-audio/smart-audio'
 import { TextToSpeech } from '@ionic-native/text-to-speech'
 import {NativeGeocoder } from '@ionic-native/native-geocoder';
 import { Facebook } from '@ionic-native/facebook';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { Facebook } from '@ionic-native/facebook';
     TextToSpeech,
     RequestService,
     SmartAudio,
+    SocialSharing,
     SplashScreen,
     StatusBar,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
