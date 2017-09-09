@@ -183,7 +183,7 @@ export class Homepage {
     let longitude = round(this.coords.longitude, 4)
     jolts = jolts.map(j => Math.floor(j))
     this.toSave = [latitude, longitude, jolts]
-    this.requestService.getPothole(latitude, longitude)
+    this.requestService.getPotholeByLocation(latitude, longitude)
     .then(data => {
       if (!data) {
         this.requestService.createPothole({

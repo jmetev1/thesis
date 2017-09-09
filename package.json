@@ -84,7 +84,8 @@
                 "APP_NAME": "Crater Gator"
             },
             "cordova-plugin-nativestorage": {},
-            "cordova-plugin-x-socialsharing": {}
+            "cordova-plugin-x-socialsharing": {},
+            "cordova-plugin-nativegeocoder": {}
         },
         "platforms": [
             "android",
