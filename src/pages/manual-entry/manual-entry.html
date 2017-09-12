@@ -1,12 +1,24 @@
-
 <ion-header>
-  <button ion-button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title></ion-title>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add a Hole</ion-title>
+  </ion-navbar>
 </ion-header>
 
-
 <ion-content padding class="body">
-  <ion-card>See a pothole? Add a pothole!</ion-card>
+  <h1>Are you standing next to a giant pothole?</h1>
+  <h1>Are you in a giant pothole?</h1>
+  <h1>Add it!</h1>
+  <br />
+  <h3>Current Location:</h3>
+  <h3>{{location}}</h3>
+  <br />
+  <ion-item>
+    <ion-input type="text" placeholder="Whatcha wanna call it?" value="" [(ngModel)]="name"></ion-input>
+  </ion-item>
+  <button ion-button full color="secondary" (click)="addPothole()">
+    Submit
+  </button>
 </ion-content>

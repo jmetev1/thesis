@@ -187,6 +187,7 @@ export class Homepage {
     this.toSave = [latitude, longitude, jolts]
     this.requestService.getPotholeByLocation(latitude, longitude)
     .then(data => {
+      console.log('homepage data check', data)
       if (!data) {
         this.requestService.createPothole({
           name: this.name(),

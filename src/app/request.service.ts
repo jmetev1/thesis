@@ -75,7 +75,7 @@ export class RequestService {
   getPotholeByLocation(lat, lng) {
     return this.http.get(`${this.url}pothole?lat=${lat}&&lng=${lng}`)
       .toPromise()
-      .then(res => res.json().data as Pothole)
+      .then(res => res.json())
       .catch(this.handleError);
   }
 
