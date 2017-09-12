@@ -144,8 +144,8 @@ export class Homepage {
   }
   tracker(holes) {
     //.25 is too small
-    let watching = {'1': {t: 3, d: .3, st: holes.slice()},
-                    '2': {t: 10, d: .5, st: []},
+    let watching = {'1': {t: 3, d: .5, st: holes.slice()},
+                    '2': {t: 10, d: .8, st: []},
                     '3': {t: 20, d: 2, st: []}}
     let workOrder = this.workOrder
     const sorter = (object, index) => { //sorting

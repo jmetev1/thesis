@@ -8,6 +8,7 @@ import { DashPage } from '../pages/dash/dash';
 import { Homepage } from '../pages/homepage/homepage';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
+import { ManualEntryPage } from '../pages/manual-entry/manual-entry';
 import { MapPage } from '../pages/map/map';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -21,7 +22,6 @@ import { HttpModule } from '@angular/http'
 import { RequestService } from './request.service'
 import { SmartAudio } from '../providers/smart-audio/smart-audio'
 import { TextToSpeech } from '@ionic-native/text-to-speech'
-import {NativeGeocoder } from '@ionic-native/native-geocoder';
 import { Facebook } from '@ionic-native/facebook';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
@@ -34,6 +34,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     Homepage,
     ListPage,
     LoginPage,
+    ManualEntryPage,
     MapPage,
     MyApp
   ],
@@ -49,6 +50,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
     Homepage,
     ListPage,
     LoginPage,
+    ManualEntryPage,
     MapPage,
     MyApp
   ],
