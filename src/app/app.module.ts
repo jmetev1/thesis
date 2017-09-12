@@ -20,6 +20,7 @@ import { HttpModule } from '@angular/http'
 import { RequestService } from './request.service'
 import { SmartAudio } from '../providers/smart-audio/smart-audio'
 import { TextToSpeech } from '@ionic-native/text-to-speech'
+import {NativeGeocoder } from '@ionic-native/native-geocoder';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { TextToSpeech } from '@ionic-native/text-to-speech'
   ],
   providers: [
     NativeAudio,
+    NativeGeocoder,
     TextToSpeech,
     DeviceMotion,
     RequestService,
