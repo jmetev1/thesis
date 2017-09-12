@@ -194,20 +194,6 @@ export class Homepage {
           lng: longitude
         })
         .then(hole => {
-<<<<<<< HEAD
-          this.requestService.createImpact({
-            force: jolts,
-            users_id: null,
-            pothole_id: hole.id
-          }).then(impact => 1)
-        })
-      } else {
-        this.requestService.createImpact({
-          force: jolts,
-          users_id: null,
-          pothole_id: data[0].id
-        }).then(impact => 1)
-=======
           console.log(103)
           this.nativeStorage.getItem('user')
             .then(user => {
@@ -227,7 +213,6 @@ export class Homepage {
               pothole_id: data[0].id
             }).then(impact => console.log(impact, 'impact saved'))
           })
->>>>>>> [add]save and display impact by user
       }
     })
   }
