@@ -23,7 +23,7 @@ export class MapPage {
     events.subscribe('menu:closed', () => this.map.setClickable(true))
   }
   ionViewDidEnter(){
-    this.platform.ready().then(() => this.loadMap())
+    this.platform.ready().then(() => this.loadMap());
   }
   bearing(lat1,lng1,lat2,lng2) {
     const toRad = (deg) => deg * Math.PI / 180
@@ -51,6 +51,7 @@ export class MapPage {
       }
     this.map = this.googleMaps.create(this.mapElement, mapOptions);
     this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+      this.map.set('backgroundColor', 'pink');
       this.requestService.getPotholes().then(values => {
         values.forEach(ph => {
           // let name = this.bearing(29.945854, -90.070120, ph.lat, ph.lng).toString() + ' ' + this.warner(ph)
