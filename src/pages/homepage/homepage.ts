@@ -6,6 +6,7 @@ import { SmartAudio } from '../../providers/smart-audio/smart-audio'
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { Geolocation } from '@ionic-native/geolocation';
 import {NativeGeocoder } from '@ionic-native/native-geocoder'
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @IonicPage()
 @Component({
@@ -33,9 +34,10 @@ export class Homepage {
     private gc: NativeGeocoder,
     private tts: TextToSpeech,
     private requestService: RequestService,
-    public smartAudio:SmartAudio,
-    public platform:Platform,
-    private deviceMotion:DeviceMotion) {}
+    public smartAudio: SmartAudio,
+    public platform: Platform,
+    private nativeStorage: NativeStorage,
+    private deviceMotion: DeviceMotion) {}
   ionViewDidEnter(){
     this.platform.ready().then(() => {
       this.watchLoc()
@@ -192,6 +194,7 @@ export class Homepage {
           lng: longitude
         })
         .then(hole => {
+<<<<<<< HEAD
           this.requestService.createImpact({
             force: jolts,
             users_id: null,
@@ -204,6 +207,27 @@ export class Homepage {
           users_id: null,
           pothole_id: data[0].id
         }).then(impact => 1)
+=======
+          console.log(103)
+          this.nativeStorage.getItem('user')
+            .then(user => {
+              this.requestService.createImpact({
+                force: jolts,
+                users_id: user.id,
+                pothole_id: hole.id
+              }).then(impact => console.log(impact, 108))
+            })
+        })
+      } else {
+        this.nativeStorage.getItem('user')
+          .then(user => {
+            this.requestService.createImpact({
+              force: jolts,
+              users_id: user.id,
+              pothole_id: data[0].id
+            }).then(impact => console.log(impact, 'impact saved'))
+          })
+>>>>>>> [add]save and display impact by user
       }
     })
   }
