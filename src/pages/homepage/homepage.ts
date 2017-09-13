@@ -221,13 +221,8 @@ export class Homepage {
               this.requestService.createImpact({
                 force: jolts,
                 users_id: user.id,
-<<<<<<< HEAD
-                pothole_id: hole.id
-              }).then(impact => console.log(impact))
-=======
                 pothole_id: data[0].id
               }).then(impact => console.log(impact, 'impact saved'))
->>>>>>> [add] cleanup
             })
         }
       })
