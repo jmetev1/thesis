@@ -15,6 +15,17 @@
   <h3>Current Location:</h3>
   <h3>{{location}}</h3>
   <br />
+  <ion-fab right top>
+      <button ion-fab color="secondary" (click)="changeEffect()">
+          <ion-icon name="md-color-wand"></ion-icon>
+      </button>
+  </ion-fab>
+
+  <ion-fab right bottom>
+      <button ion-fab color="primary" (click)="takePicture()">
+          <ion-icon name="md-camera"></ion-icon>
+      </button>
+  </ion-fab>
   <ion-item>
     <ion-input type="text" placeholder="Whatcha wanna call it?" value="" [(ngModel)]="name"></ion-input>
   </ion-item>

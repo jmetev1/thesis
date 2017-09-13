@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { RequestService } from '../../app/request.service'
+
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder'
 import { NativeStorage } from '@ionic-native/native-storage';
-import { RequestService } from '../../app/request.service'
 
 
 @IonicPage()
@@ -24,7 +26,9 @@ export class ManualEntryPage {
     private nativeGeocoder: NativeGeocoder,
     private requestService: RequestService,
     private nativeStorage: NativeStorage,
+    private camera: Camera,
     public navParams: NavParams) {
+
       this.geolocation.getCurrentPosition().then((resp) => {
         const round = (t, d) => Number(Math.round(Number(t+'e'+d))+'e-'+d)
         this.lat = round(resp.coords.latitude, 4)
@@ -33,6 +37,9 @@ export class ManualEntryPage {
           .then(res => this.location = `${res.subThoroughfare} ${res.thoroughfare}`)
       }).catch((error) => console.log('Error getting location', error));
   }
+
+  
+
 
   showAlert() {
     let alert = this.alertCtrl.create({
