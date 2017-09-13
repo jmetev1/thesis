@@ -19,8 +19,23 @@ export class Impact {
 @Injectable()
 export class RequestService {
   private headers = new Headers({'Content-Type': 'application/json'});
+  // private url = 'http://54.227.175.5/'
   private url = 'http://cratergator.club/'
   constructor(private http: Http, private nativeStorage: NativeStorage) { }
+
+  //snap to roads
+  snapToRoad(lat, lng) {
+    console.log('in snap to road')
+    let key = 'AIzaSyCDkBmhOoNsGrpIXsS4R-CT4IoVLrYuATU'
+    let roadUrl = `https://roads.googleapis.com/v1/snapToRoads?path=${lat},${lng}&key=${key}`
+    console.log(roadUrl)
+    return this.http.get(roadUrl).toPromise().then(res => {
+      console.log(res)
+      return res.json()
+    }).catch(this.handleError)
+  }
+
+
 
   // post requests
   createImpact(info: any): any {

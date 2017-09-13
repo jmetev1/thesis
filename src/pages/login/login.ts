@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { Http } from '@angular/http';
 
-import { DashPage} from '../dash/dash';
+import { Homepage } from '../homepage/homepage'
 import { RequestService } from '../../app/request.service';
 
 import { Facebook } from '@ionic-native/facebook';
@@ -63,6 +63,6 @@ export class LoginPage {
   }
 
   redirectToDash(): void {
-    this.navCtrl.setRoot(DashPage);
+    this.navCtrl.setRoot(Homepage);
   }
 }

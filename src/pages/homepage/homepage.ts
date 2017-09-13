@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, Platform } from 'ionic-angular';
 import { DeviceMotion } from '@ionic-native/device-motion';
 import { RequestService } from '../../app/request.service'
-import { SmartAudio } from '../../providers/smart-audio/smart-audio'
+// import { SmartAudio } from '../../providers/smart-audio/smart-audio'
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { Geolocation } from '@ionic-native/geolocation';
-import {NativeGeocoder } from '@ionic-native/native-geocoder'
+import { NativeGeocoder } from '@ionic-native/native-geocoder'
 import { NativeStorage } from '@ionic-native/native-storage';
 
 @IonicPage()
@@ -14,6 +14,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
   templateUrl: 'homepage.html'
 })
 export class Homepage {
+  user: string;
   private moveCounter:number = 0;
   trigger: string = 'none'
   jolts: Array<number> = [1, 1, 1]
@@ -29,15 +30,22 @@ export class Homepage {
   closest: object = {heading: 1000, lat: 1, lng: 1}
   subscription
   used: object = {}
+  showSettings: boolean = false
+  forReal: boolean = false
 
   constructor(private geolocation: Geolocation,
     private gc: NativeGeocoder,
     private tts: TextToSpeech,
     private requestService: RequestService,
-    public smartAudio: SmartAudio,
+    // public smartAudio: SmartAudio,
     public platform: Platform,
     private nativeStorage: NativeStorage,
-    private deviceMotion: DeviceMotion) {}
+    private deviceMotion: DeviceMotion) {
+      this.nativeStorage.getItem('user')
+      .then(user => {
+        this.user = user.name;
+      })
+    }
   ionViewDidEnter(){
     this.platform.ready().then(() => {
       this.watchLoc()
@@ -181,39 +189,48 @@ export class Homepage {
   saveImpact(jolts) {
     const round = (t, d) => Number(Math.round(Number(t+'e'+d))+'e-'+d)
     this.speak(jolts)
-    let latitude = round(this.coords.latitude, 4)
-    let longitude = round(this.coords.longitude, 4)
-    jolts = jolts.map(j => Math.floor(j))
-    this.toSave = [latitude, longitude, jolts]
-    this.requestService.getPotholeByLocation(latitude, longitude)
-    .then(data => {
-      console.log('homepage data check', data)
-      if (data.length === 0) {
-        this.requestService.createPothole({
-          name: this.name(),
-          lat: latitude,
-          lng: longitude
-        })
-        .then(hole => {
+    let latitude, longitude;
+    this.requestService.snapToRoad(this.coords.latitude, this.coords.longitude)
+    .then(res => {
+      latitude = round(res.snappedPoints[0].location.latitude, 4)
+      longitude = round(res.snappedPoints[0].location.longitude, 4)
+      jolts = jolts.map(j => Math.floor(j))
+      this.toSave = [latitude, longitude, jolts]
+      this.requestService.getPotholeByLocation(latitude, longitude)
+      .then(data => {
+        if (!data) {
+          this.requestService.createPothole({
+            name: this.name(),
+            lat: latitude,
+            lng: longitude
+          })
+          .then(hole => {
+            console.log(103)
+            this.nativeStorage.getItem('user')
+              .then(user => {
+                this.requestService.createImpact({
+                  force: jolts,
+                  users_id: user.id,
+                  pothole_id: hole.id
+                }).then(impact => console.log(impact, 108))
+              })
+          })
+        } else {
           this.nativeStorage.getItem('user')
             .then(user => {
               this.requestService.createImpact({
                 force: jolts,
                 users_id: user.id,
+<<<<<<< HEAD
                 pothole_id: hole.id
               }).then(impact => console.log(impact))
+=======
+                pothole_id: data[0].id
+              }).then(impact => console.log(impact, 'impact saved'))
+>>>>>>> [add] cleanup
             })
-        })
-      } else {
-        this.nativeStorage.getItem('user')
-          .then(user => {
-            this.requestService.createImpact({
-              force: jolts,
-              users_id: user.id,
-              pothole_id: data[0].id
-            }).then(impact => console.log(impact, 'impact saved'))
-          })
-      }
+        }
+      })
     })
   }
   name() {

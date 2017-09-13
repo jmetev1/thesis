@@ -1,8 +1,9 @@
 1. add haptic feedback
-2. launch navigator
 3. location accuracy request change
-4. why will it only use fake loc temporarily?
-5. 
+7. option to have phone buzz or talk to you
+9. machine learning
+10. deploy somewhere easier than android store?
+
 why does it console.log( cat 1 has potholes when it's still 0)
 sequence
 watchLoc
@@ -10,4 +11,3 @@ watchLoc
     saveImpact
   request Service
     tracker
-
