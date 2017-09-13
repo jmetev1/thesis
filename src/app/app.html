@@ -7,9 +7,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content class="body">
     <ion-list>
-      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)" class="page">
         {{p.title}}
       </button>
     </ion-list>

@@ -144,8 +144,8 @@ export class Homepage {
   }
   tracker(holes) {
     //.25 is too small
-    let watching = {'1': {t: 3, d: .3, st: holes.slice()},
-                    '2': {t: 10, d: .5, st: []},
+    let watching = {'1': {t: 3, d: .5, st: holes.slice()},
+                    '2': {t: 10, d: .8, st: []},
                     '3': {t: 20, d: 2, st: []}}
     let workOrder = this.workOrder
     const sorter = (object, index) => { //sorting
@@ -187,21 +187,21 @@ export class Homepage {
     this.toSave = [latitude, longitude, jolts]
     this.requestService.getPotholeByLocation(latitude, longitude)
     .then(data => {
-      if (!data) {
+      console.log('homepage data check', data)
+      if (data.length === 0) {
         this.requestService.createPothole({
           name: this.name(),
           lat: latitude,
           lng: longitude
         })
         .then(hole => {
-          console.log(103)
           this.nativeStorage.getItem('user')
             .then(user => {
               this.requestService.createImpact({
                 force: jolts,
                 users_id: user.id,
                 pothole_id: hole.id
-              }).then(impact => console.log(impact, 108))
+              }).then(impact => console.log(impact))
             })
         })
       } else {
@@ -228,7 +228,10 @@ export class Homepage {
   speak(ar) {
     let str = ar.reduce((a, c) => `${a} ${Number(c.toString().slice(0, 3))
       .toString()} gees,`, '')
-    this.tts.speak(`That impact was ${str}`)
+    this.tts.speak({
+      text: `That impact was ${str}`,
+      locale: 'en-GB'
+    })
   }
    // Credit: http://stackoverflow.com/a/27943/52160
    getDist(lat1,lon1,lat2,lon2) {

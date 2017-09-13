@@ -2,11 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
-import { ListPage } from '../pages/list/list';
-import { Homepage } from '../pages/homepage/homepage';
-import { MapPage } from '../pages/map/map';
-import { LoginPage } from '../pages/login/login';
 import { DashPage } from '../pages/dash/dash';
+import { Homepage } from '../pages/homepage/homepage';
+import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
+import { ManualEntryPage } from '../pages/manual-entry/manual-entry';
+import { MapPage } from '../pages/map/map';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,7 +21,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage = LoginPage;
+  rootPage = ManualEntryPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -30,14 +31,16 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
   ) {
+    this.splashScreen.show();
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
       { title: 'Test Page', component: Homepage },
+      { title: 'Dashboard', component: DashPage },
+      { title: 'Add a Pothole', component: ManualEntryPage},
       { title: 'Greatest Hits', component: ListPage },
       { title: 'Pothole Map', component: MapPage },
-      { title: 'Dashboard', component: DashPage},
     ];
   }
   menuClosed() {
