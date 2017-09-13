@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
-import { DashPage } from '../pages/dash/dash';
 import { Homepage } from '../pages/homepage/homepage';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -36,7 +35,6 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Test Page', component: Homepage },
-      { title: 'Dashboard', component: DashPage },
       { title: 'Add a Pothole', component: ManualEntryPage},
       { title: 'Greatest Hits', component: ListPage },
       { title: 'Pothole Map', component: MapPage },
