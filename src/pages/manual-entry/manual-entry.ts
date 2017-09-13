@@ -18,6 +18,15 @@ export class ManualEntryPage {
   lat: number;
   lng: number;
   location: string;
+  image: string;
+  options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    // encodingType: this.camera.EncodingType.JPEG,
+    // mediaType: this.camera.MediaType.PICTURE,
+    targetHeight: 320,
+    targetWidth: 320
+  }
 
   constructor(
     public navCtrl: NavController,
@@ -38,7 +47,13 @@ export class ManualEntryPage {
       }).catch((error) => console.log('Error getting location', error));
   }
 
-  
+  takePicture() {
+    this.camera.getPicture(this.options)
+      .then(data => {
+        this.image = `data:image/jpeg;base64,${data}`
+      })
+      .catch(e => console.error(e));
+  }
 
 
   showAlert() {

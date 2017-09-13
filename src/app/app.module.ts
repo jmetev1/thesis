@@ -24,7 +24,6 @@ import { NativeAudio } from '@ionic-native/native-audio'
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { RequestService } from './request.service'
-import { SmartAudio } from '../providers/smart-audio/smart-audio'
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TextToSpeech } from '@ionic-native/text-to-speech'
 
@@ -66,7 +65,6 @@ import { TextToSpeech } from '@ionic-native/text-to-speech'
     NativeStorage,
     TextToSpeech,
     RequestService,
-    SmartAudio,
     SocialSharing,
     SplashScreen,
     StatusBar,
