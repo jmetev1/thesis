@@ -4,7 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { FormsModule }   from '@angular/forms';
 import { MyApp } from './app.component';
 
-import { DashPage } from '../pages/dash/dash';
 import { Homepage } from '../pages/homepage/homepage';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -30,7 +29,6 @@ import { TextToSpeech } from '@ionic-native/text-to-speech'
 
 @NgModule({
   declarations: [
-    DashPage,
     Homepage,
     ListPage,
     LoginPage,
@@ -46,7 +44,6 @@ import { TextToSpeech } from '@ionic-native/text-to-speech'
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    DashPage,
     Homepage,
     ListPage,
     LoginPage,

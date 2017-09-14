@@ -16,6 +16,7 @@ export class MapPage {
   holes: any = [1,1,1]
   mapElement: HTMLElement;
   mapLoaded:Boolean = false
+  snap
 
   constructor(private googleMaps: GoogleMaps, public platform: Platform,
   private requestService:RequestService, public events:Events,
@@ -23,7 +24,11 @@ export class MapPage {
     events.subscribe('menu:closed', () => this.map.setClickable(true))
   }
   ionViewDidEnter(){
-    this.platform.ready().then(() => this.loadMap());
+    this.platform.ready().then(() => {
+      this.loadMap()
+      this.requestService.snapToRoad(29.944748, -90.070081)
+      .then(res => console.log(res.snappedPoints[0].location))
+    });
   }
   bearing(lat1,lng1,lat2,lng2) {
     const toRad = (deg) => deg * Math.PI / 180
@@ -34,13 +39,6 @@ export class MapPage {
     var brng = toDeg(Math.atan2(y, x));
     return ((brng + 360) % 360);
   }
-  // warner(p) { //loop over pits, if within 40 +- or heading, warn
-  //     let b = this.bearing(29.945854, -90.070120, p.lat, p.lng)
-  //     let myB = 25
-  //     // this.coords.heading
-  //     console.log(b, myB)
-  //     return Math.abs(b - myB).toString() //this.tts.speak(`Your bearing is ${myB}, bearing to pothole is ${b}`).then
-  // }
   loadMap() {
     this.mapLoaded = true;
       this.mapElement = document.getElementById('map');

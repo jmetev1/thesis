@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { RequestService } from '../../app/request.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
 
 
 @Component({
