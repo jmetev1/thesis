@@ -39,7 +39,6 @@
         "cordova-browser": "^4.1.0",
         "cordova-plugin-camera": "^2.4.1",
         "cordova-plugin-compat": "^1.1.0",
-        "cordova-plugin-console": "^1.0.7",
         "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-device-motion": "^1.2.5",
         "cordova-plugin-facebook4": "^1.9.1",
@@ -59,6 +58,7 @@
         "ionicons": "3.0.0",
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
+        "tslint-config-airbnb": "^5.3.0",
         "zone.js": "0.8.12"
     },
     "devDependencies": {
@@ -69,7 +69,6 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-device-motion": {},
-            "cordova-plugin-console": {},
             "cordova-plugin-device": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-statusbar": {},
