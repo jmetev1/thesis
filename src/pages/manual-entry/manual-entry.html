@@ -15,6 +15,9 @@
   <h3>Current Location:</h3>
   <h3>{{location}}</h3>
   <br />
+  <!-- <cl-image public-id="sample.jpg" class="logo" angle="20" effect="sepia" format="png"> 
+    <cl-transformation height="150" width="150" ></cl-transformation>
+  </cl-image> -->
   <img [src]="image" *ngIf="image">
   <ion-fab right bottom>
       <button ion-fab color="primary" (click)="takePicture()">

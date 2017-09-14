@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular'
 import { RequestService } from '../../app/request.service'
-
-import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Camera, CameraOptions } from '@ionic-native/camera'
+import { Geolocation } from '@ionic-native/geolocation'
 import { NativeGeocoder } from '@ionic-native/native-geocoder'
-import { NativeStorage } from '@ionic-native/native-storage';
+import { NativeStorage } from '@ionic-native/native-storage'
+import { Headers, Http } from '@angular/http'
 
 
 @IonicPage()
@@ -21,11 +21,12 @@ export class ManualEntryPage {
   image: string;
   options: CameraOptions = {
     quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    // encodingType: this.camera.EncodingType.JPEG,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
     // mediaType: this.camera.MediaType.PICTURE,
     targetHeight: 320,
-    targetWidth: 320
+    targetWidth: 320,
+    saveToPhotoAlbum: true
   }
 
   constructor(
@@ -36,6 +37,7 @@ export class ManualEntryPage {
     private requestService: RequestService,
     private nativeStorage: NativeStorage,
     private camera: Camera,
+    private http: Http,
     public navParams: NavParams) {
 
       this.geolocation.getCurrentPosition().then((resp) => {
@@ -50,7 +52,8 @@ export class ManualEntryPage {
   takePicture() {
     this.camera.getPicture(this.options)
       .then(data => {
-        this.image = `data:image/jpeg;base64,${data}`
+        console.log(data);
+        this.image = data
       })
       .catch(e => console.error(e));
   }
@@ -66,36 +69,40 @@ export class ManualEntryPage {
   }
 
   addPothole() {
-      this.requestService.getPotholeByLocation(this.lat, this.lng)
-      .then(data => {
-        if (data.length === 0) {
-          this.requestService.createPothole({
-            name: this.name,
-            lat: this.lat,
-            lng: this.lng
-          })
-          .then(hole => {
-            this.nativeStorage.getItem('user')
-              .then(user => {
-                this.requestService.createImpact({
-                  force: [1],
-                  users_id: user.id,
-                  pothole_id: hole.id
-                }).then(impact => console.log('impact created', impact))
-              })
-          })
-        } else {
-          this.showAlert()
-          this.nativeStorage.getItem('user')
-            .then(user => {
-              this.requestService.createImpact({
-                force: [1],
-                users_id: user.id,
-                pothole_id: data[0].id
-              }).then(impact => console.log(impact, 'impact saved'))
-            })
-        }
-      })
+    return this.http.post('https://api.cloudinary.com/v1_1/dbfuuafr7/image/upload', {file: this.image})
+      .toPromise()
+      .then(res => console.log(res))
+      .catch(e => console.error(e))
+      // this.requestService.getPotholeByLocation(this.lat, this.lng)
+      // .then(data => {
+      //   if (data.length === 0) {
+      //     this.requestService.createPothole({
+      //       name: this.name,
+      //       lat: this.lat,
+      //       lng: this.lng
+      //     })
+      //     .then(hole => {
+      //       this.nativeStorage.getItem('user')
+      //         .then(user => {
+      //           this.requestService.createImpact({
+      //             force: [1],
+      //             users_id: user.id,
+      //             pothole_id: hole.id
+      //           }).then(impact => console.log('impact created', impact))
+      //         })
+      //     })
+      //   } else {
+      //     this.showAlert()
+      //     this.nativeStorage.getItem('user')
+      //       .then(user => {
+      //         this.requestService.createImpact({
+      //           force: [1],
+      //           users_id: user.id,
+      //           pothole_id: data[0].id
+      //         }).then(impact => console.log(impact, 'impact saved'))
+      //       })
+      //   }
+      // })
   }
 
 }

@@ -1,6 +1,6 @@
-import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { Injectable }    from '@angular/core'
+import { Headers, Http } from '@angular/http'
+import { NativeStorage } from '@ionic-native/native-storage'
 
 
 import 'rxjs/add/operator/toPromise';
