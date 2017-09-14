@@ -174,7 +174,7 @@ export class Homepage {
       for (const key in watching) {
         key === index ? watching[key].st = sorted[key].slice() : (
           watching[key].st = watching[key].st.concat(sorted[key]));
-        console.log('category', index, 'has this many potholes', watching[index].st.length);
+        // console.log('category', index, 'has this many potholes', watching[index].st.length);
       }
       index === '1' ? (this.warner(watching[index].st)) : 1;
       workOrder === this.workOrder ? (
