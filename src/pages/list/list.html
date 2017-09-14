@@ -11,8 +11,6 @@
   <ion-list inset class="impactList">
       <ion-item  class="impactItem" text-wrap *ngFor="let pothole of potholes">
         {{pothole.message}}
-        <!-- You hit {{pothole.name}} at {{pothole.num}} {{pothole.street}} with a force of
-        {{pothole.force}} Gs on {{pothole.date}} -->
         <br />
         <button ion-button (click)="postToFb(pothole)" round>
           Share!

@@ -20,7 +20,7 @@
 1. [Contributing](#contributing)
 
 ## About
-
+You're on your way to City Park with the family. Johnny and Suzy are getting along in the backseat, the dog is cuddling in Ame's lap, and everyone's singing along to No Scrubs. Out of nowhere
 
 ## Usage
 
@@ -29,6 +29,7 @@
 
 ## Wireframe
 ![Wireframe](images/wireframe.png)
+![Wiring](images/wiring.png)
 
 ## Tech Stack
 ![Tech Stack](images/techstack.png)

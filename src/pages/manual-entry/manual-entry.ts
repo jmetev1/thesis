@@ -17,7 +17,7 @@ export class ManualEntryPage {
   name: string;
   lat: number;
   lng: number;
-  location: string;
+  location: string = 'Getting current location';
   image: string;
   options: CameraOptions = {
     quality: 100,
