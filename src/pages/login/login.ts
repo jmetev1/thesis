@@ -24,7 +24,7 @@ export class LoginPage {
     public navCtrl: NavController,
     private fb: Facebook,
     private requestService: RequestService,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
   ){
     this.nativeStorage.getItem('user')
       .then(data => {
