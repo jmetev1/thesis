@@ -19,7 +19,7 @@ import { Events } from 'ionic-angular';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage = LoginPage;
+  rootPage = ManualEntryPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -34,7 +34,7 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Test Page', component: Homepage },
+      { title: 'Home Page', component: Homepage },
       { title: 'Add a Pothole', component: ManualEntryPage},
       { title: 'Greatest Hits', component: ListPage },
       { title: 'Pothole Map', component: MapPage },

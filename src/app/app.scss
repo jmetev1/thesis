@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -16,9 +15,10 @@
 // automatically applied to the <body> element in the app.
 
 .page {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.4);
   color: #F3DFC1;
 }
-.body {
-  background-color: #246A73;
+
+.menu-background {
+  background-color: #368F8B;
 }

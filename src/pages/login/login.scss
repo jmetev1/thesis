@@ -1,3 +1,5 @@
+
+
 page-login {
 
   .body {
@@ -17,14 +19,21 @@ page-login {
   }
   #greeting {
     font-weight: bold;
-    color: white;
+    color: #F3DFC1;
   }
   #title {
-    color: white;
+    color: #F3DFC1;
   }
 
   #gator {
     height: 300px;
+  }
+  .animated {
+    animation-name: pulse;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
   }
 }
 

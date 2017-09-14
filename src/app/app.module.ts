@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { FormsModule }   from '@angular/forms';
-import { MyApp } from './app.component';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule, ErrorHandler } from '@angular/core'
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular'
+import { FormsModule }   from '@angular/forms'
+import { MyApp } from './app.component'
 
 import { Homepage } from '../pages/homepage/homepage';
 import { ListPage } from '../pages/list/list';
@@ -10,22 +10,24 @@ import { LoginPage } from '../pages/login/login';
 import { ManualEntryPage } from '../pages/manual-entry/manual-entry';
 import { MapPage } from '../pages/map/map';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar'
+import { SplashScreen } from '@ionic-native/splash-screen'
 
-import { Camera } from '@ionic-native/camera';
-import { DeviceMotion } from '@ionic-native/device-motion';
-import { Facebook } from '@ionic-native/facebook';
+import { Camera } from '@ionic-native/camera'
+import { DeviceMotion } from '@ionic-native/device-motion'
+import { Facebook } from '@ionic-native/facebook'
 import { Geolocation } from '@ionic-native/geolocation'
-import { GoogleMaps } from '@ionic-native/google-maps';
+import { GoogleMaps } from '@ionic-native/google-maps'
 import { HttpModule } from '@angular/http'
 import { NativeAudio } from '@ionic-native/native-audio'
-import { NativeGeocoder } from '@ionic-native/native-geocoder';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { NativeGeocoder } from '@ionic-native/native-geocoder'
+import { NativeStorage } from '@ionic-native/native-storage'
 import { RequestService } from './request.service'
-import { SocialSharing } from '@ionic-native/social-sharing';
+import { SocialSharing } from '@ionic-native/social-sharing'
 import { TextToSpeech } from '@ionic-native/text-to-speech'
 
+import { CloudinaryModule } from '@cloudinary/angular-4.x'
+import * as Cloudinary from 'cloudinary-core'
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { TextToSpeech } from '@ionic-native/text-to-speech'
   ],
   imports: [
     BrowserModule,
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'dbfuuafr7' }),
     FormsModule,
     HttpModule,
     IonicModule.forRoot(MyApp)

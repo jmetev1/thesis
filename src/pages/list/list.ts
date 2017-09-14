@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { RequestService } from '../../app/request.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
@@ -12,19 +12,13 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder';
 })
 
 export class ListPage {
-  platform:Platform
-  coord:Array<number> = [0, 0]
-  progress:String = '';
-  impacts: Array<object>
+  impacts: Array<any>
   holes: Array<object>
-  name: string
-  num: string
-  street: string
+  potholes: Array<any> = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    platform:Platform,
     public requestService: RequestService,
     private socialSharing: SocialSharing,
     private nativeGeocoder: NativeGeocoder
@@ -35,29 +29,47 @@ export class ListPage {
           e.date = e.date.slice(5, 7) + '-'+ e.date.slice(8, 10) + '-'+
           e.date.slice(0,4)
           e.force = e.force.reduce((a, c) => a + (c/9.8).toString().slice(0,3)+',', '')
-          console.log(e.force)
           return e
         })
-      })
-  }
-
-  sendMessage(i: any) {
-    let message = `I hit the ${this.name} on ${i.date} at ${this.num} ${this.street}. It had a force of ${i.force} g's! @MayorLandrieu`
-      this.socialSharing.share(message, null, null)
-  }
-
-  postToFb(impact: any): any {
-    this.requestService.getPotholeById(impact.pothole_id)
-      .then(pothole => {
-        this.name = pothole.name;
-        this.nativeGeocoder.reverseGeocode(pothole.lat, pothole.lng)
-        .then(address => {
-          this.num = address.subThoroughfare
-          this.street = address.thoroughfare
-          this.sendMessage(impact)
+        this.impacts.forEach(impact => {
+          console.log(impact)
+          this.requestService.getPotholeById(impact.pothole_id)
+            .then(hole => {
+              this.nativeGeocoder.reverseGeocode(hole.lat, hole.lng)
+              .then(address => {
+                if(impact.force === '0.1,') {
+                  this.potholes.unshift({
+                    date: impact.date,
+                    force: impact.force,
+                    name: hole.name,
+                    num: address.subThoroughfare,
+                    street: address.thoroughfare,
+                    message:`
+                      You manually added the ${hole.name} at ${address.subThoroughfare} ${address.thoroughfare}
+                      on ${impact.date}. Thanks!`
+                  })
+                } else {
+                  this.potholes.unshift({
+                    date: impact.date,
+                    force: impact.force,
+                    name: hole.name,
+                    num: address.subThoroughfare,
+                    street: address.thoroughfare,
+                    message:`
+                      You hit the ${hole.name} at ${address.subThoroughfare} ${address.thoroughfare}
+                      with a force of ${impact.force} Gs on ${impact.date}`
+                  })
+                }
+              })
+            })
         })
       })
-      .catch(e => console.log(e));
+  }
+  // You hit {{pothole.name}} at {{pothole.num}} {{pothole.street}} with a force of
+  // {{pothole.force}} Gs on {{pothole.date}}
+  postToFb(p: any): any {
+    let message = `There's a huge pothole named ${p.name} at ${p.num} ${p.street}! @MayorLandrieu`
+    this.socialSharing.share(message, null, null)
   }
 
 }
