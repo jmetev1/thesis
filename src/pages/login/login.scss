@@ -1,3 +1,5 @@
+
+
 page-login {
 
   .body {
@@ -25,6 +27,13 @@ page-login {
 
   #gator {
     height: 300px;
+  }
+  .animated {
+    animation-name: pulse;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
   }
 }
 
