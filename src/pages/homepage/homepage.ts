@@ -77,13 +77,8 @@ export class Homepage {
     let latitude;
     let longitude;
     let heading;
-    console.log(this.realGeo, 79, this.geolocation);
-
     this.realGeo ? (this.subscription = this.geolocation.watchPosition(
-      { enableHighAccuracy: true }).subscribe(loc => {
-        console.log(loc);
-        cb(loc);
-      })) : (
+      { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
       latitude = 29.927594 + Math.random() * .08865,
       longitude = -90.132690 + Math.random() * .196903,
       heading = 0,
@@ -201,49 +196,46 @@ export class Homepage {
       console.log(res)
       latitude = round(res.snappedPoints[0].location.latitude, 4);
       longitude = round(res.snappedPoints[0].location.longitude, 4);
-      const roundedJolts = jolts.map(j => Math.floor(j)); //below here newjolts
+      const roundedJolts = jolts.map(j => Math.floor(j));
       this.toSave = [latitude, longitude, roundedJolts];
       console.log(latitude, this.toSave);
       this.requestService.getPotholeByLocation(latitude, longitude)
-      .then(data => {
+      .then((data) => {
         if (!data || data.length === 0) {
           this.requestService.createPothole({
             name: this.name(),
             lat: latitude,
-            lng: longitude
+            lng: longitude,
           })
-          .then(hole => {
-            console.log(103)
+          .then((hole) => {
             this.nativeStorage.getItem('user')
-              .then(user => {
-                console.log(user, 219)
+              .then((user) => {
                 this.requestService.createImpact({
                   force: roundedJolts,
                   users_id: user.id,
-                  pothole_id: hole.id
-                }).then(impact => console.log(impact, 108))
-              })
-          })
+                  pothole_id: hole.id,
+                }).then(impact => console.log(impact, 108));
+              });
+          });
         } else {
           this.nativeStorage.getItem('user')
-            .then(user => {
-              console.log(user, 230)
+            .then((user) => {
               this.requestService.createImpact({
                 force: roundedJolts,
                 users_id: user.id,
-                pothole_id: data[0].id
-              }).then(impact => console.log(impact, 'impact saved'))
-            })
+                pothole_id: data[0].id,
+              }).then(impact => 1);
+            });
         }
       });
     });
   }
   name() {
     const first = ['cavern', 'pit', 'hole', 'jaws', 'crater', 'pit',
-    'rut', 'bump', 'dent'];
+      'rut', 'bump', 'dent'];
     const second = ['despair', 'lost cars', 'infinite depth',
-    'Moria', 'tremendous damage', 'get your checkbook out',
-    'desperation', 'disheartenment', 'dashed hopes'];
+      'Moria', 'tremendous damage', 'get your checkbook out',
+      'desperation', 'disheartenment', 'dashed hopes'];
     const random = () => Math.floor(Math.random() * first.length);
     return first[random()] + ' of ' + second[random()];
   }
@@ -252,17 +244,17 @@ export class Homepage {
       .toString()} gees,`,'');
     this.tts.speak({
       text: `That impact was ${str}`,
-      locale: 'en-GB'
+      locale: 'en-GB',
     });
   }
    // Credit: http://stackoverflow.com/a/27943/52160
   getDist(lat1,lon1,lat2,lon2) {
-     const deg2rad = (deg) => deg * (Math.PI/180);
-     const dLat = deg2rad(lat2 -lat1);  // deg2rad below
-     const dLon = deg2rad(lon2-lon1);
-     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    const deg2rad = deg => deg * (Math.PI / 180);
+    const dLat = deg2rad(lat2 - lat1);  // deg2rad below
+    const dLon = deg2rad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
     Math.sin(dLon / 2) * Math.sin(dLon / 2);
-     return 7919.204 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-   }
+    return 7919.204 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
 }
