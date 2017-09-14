@@ -29,14 +29,9 @@ export class RequestService {
     let key = 'AIzaSyCDkBmhOoNsGrpIXsS4R-CT4IoVLrYuATU'
     let roadUrl = `https://roads.googleapis.com/v1/snapToRoads?path=${lat},${lng}&key=${key}`
     console.log(roadUrl)
-    return this.http.get(roadUrl).toPromise().then(res => {
-      console.log(res)
-      return res.json()
-    }).catch(this.handleError)
+    return this.http.get(roadUrl).toPromise().then(res => res.json())
+    .catch(this.handleError)
   }
-
-
-
   // post requests
   createImpact(info: any): any {
     return this.http.post(`${this.url}impact`,

@@ -62,6 +62,7 @@ export class Homepage {
   }
   watchLoc() {
     const cb = (data) => {
+      console.log('cb called with', data)
       this.coords = data.coords;
       this.requestService.getPotholes().then((potholes) => {
         !this.trackerStarted ? (
@@ -76,8 +77,13 @@ export class Homepage {
     let latitude;
     let longitude;
     let heading;
+    console.log(this.realGeo, 79, this.geolocation);
+
     this.realGeo ? (this.subscription = this.geolocation.watchPosition(
-      { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
+      { enableHighAccuracy: true }).subscribe(loc => {
+        console.log(loc);
+        cb(loc);
+      })) : (
       latitude = 29.927594 + Math.random() * .08865,
       longitude = -90.132690 + Math.random() * .196903,
       heading = 0,
@@ -129,7 +135,7 @@ export class Homepage {
       p.d < closest.d ? closest = p : 1;
       const b = this.bearing(this.coords.latitude, this.coords.longitude, p.lat, p.lng);
       const myB = Number(this.coords.heading);
-      console.log(b, myB);
+      // console.log(b, myB);
       this.trigger = `to closest is ${b}, your b is ${myB}`;
       let mes;
       const rounded = p.d.toString().slice(0,3);
@@ -186,19 +192,21 @@ export class Homepage {
     },         60000);
   }
   saveImpact(jolts) {
-    const round = (t, d) => Number(Math.round(Number(t + 'e' + d)) + 'e - ' + d);
+    const round = (t, d) => Number(Math.round(Number(t + 'e' + d)) + 'e-' + d);
     this.speak(jolts);
     let latitude;
     let longitude;
     this.requestService.snapToRoad(this.coords.latitude, this.coords.longitude)
     .then((res) => {
+      console.log(res)
       latitude = round(res.snappedPoints[0].location.latitude, 4);
       longitude = round(res.snappedPoints[0].location.longitude, 4);
       const roundedJolts = jolts.map(j => Math.floor(j)); //below here newjolts
       this.toSave = [latitude, longitude, roundedJolts];
+      console.log(latitude, this.toSave);
       this.requestService.getPotholeByLocation(latitude, longitude)
       .then(data => {
-        if (!data) {
+        if (!data || data.length === 0) {
           this.requestService.createPothole({
             name: this.name(),
             lat: latitude,
@@ -208,6 +216,7 @@ export class Homepage {
             console.log(103)
             this.nativeStorage.getItem('user')
               .then(user => {
+                console.log(user, 219)
                 this.requestService.createImpact({
                   force: roundedJolts,
                   users_id: user.id,
@@ -218,6 +227,7 @@ export class Homepage {
         } else {
           this.nativeStorage.getItem('user')
             .then(user => {
+              console.log(user, 230)
               this.requestService.createImpact({
                 force: roundedJolts,
                 users_id: user.id,
