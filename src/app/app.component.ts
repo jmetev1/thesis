@@ -34,7 +34,7 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Test Page', component: Homepage },
+      { title: 'Home Page', component: Homepage },
       { title: 'Add a Pothole', component: ManualEntryPage},
       { title: 'Greatest Hits', component: ListPage },
       { title: 'Pothole Map', component: MapPage },

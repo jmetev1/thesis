@@ -59,7 +59,7 @@ export class ManualEntryPage {
   }
 
 
-  showAlert() {
+  alreadyStoredAlert() {
     let alert = this.alertCtrl.create({
       title: 'Heads up!',
       subTitle: 'This pothole has already been registered. Thank you for letting us know its still a problem!',
@@ -68,41 +68,46 @@ export class ManualEntryPage {
     alert.present();
   }
 
+  successfullyStoredAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Saved!',
+      subTitle: 'Thanks for helping us make our city a more beautiful place!',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
   addPothole() {
-    return this.http.post('https://api.cloudinary.com/v1_1/dbfuuafr7/image/upload', {file: this.image})
-      .toPromise()
-      .then(res => console.log(res))
-      .catch(e => console.error(e))
-      // this.requestService.getPotholeByLocation(this.lat, this.lng)
-      // .then(data => {
-      //   if (data.length === 0) {
-      //     this.requestService.createPothole({
-      //       name: this.name,
-      //       lat: this.lat,
-      //       lng: this.lng
-      //     })
-      //     .then(hole => {
-      //       this.nativeStorage.getItem('user')
-      //         .then(user => {
-      //           this.requestService.createImpact({
-      //             force: [1],
-      //             users_id: user.id,
-      //             pothole_id: hole.id
-      //           }).then(impact => console.log('impact created', impact))
-      //         })
-      //     })
-      //   } else {
-      //     this.showAlert()
-      //     this.nativeStorage.getItem('user')
-      //       .then(user => {
-      //         this.requestService.createImpact({
-      //           force: [1],
-      //           users_id: user.id,
-      //           pothole_id: data[0].id
-      //         }).then(impact => console.log(impact, 'impact saved'))
-      //       })
-      //   }
-      // })
+      this.requestService.getPotholeByLocation(this.lat, this.lng)
+      .then(data => {
+        if (data.length === 0) {
+          this.requestService.createPothole({
+            name: this.name,
+            lat: this.lat,
+            lng: this.lng
+          })
+          .then(hole => {
+            this.nativeStorage.getItem('user')
+              .then(user => {
+                this.requestService.createImpact({
+                  force: [1],
+                  users_id: user.id,
+                  pothole_id: hole.id
+                }).then(impact => console.log('impact created', impact))
+              })
+          })
+        } else {
+          this.alreadyStoredAlert()
+          this.nativeStorage.getItem('user')
+            .then(user => {
+              this.requestService.createImpact({
+                force: [1],
+                users_id: user.id,
+                pothole_id: data[0].id
+              }).then(impact => console.log(impact, 'impact saved'))
+            })
+        }
+      })
   }
 
 }
