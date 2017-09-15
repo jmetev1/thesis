@@ -8,15 +8,14 @@
 </ion-header>
 
 <ion-content class="body" padding>
-  <h1>Check out our features, {{ user }}!</h1>
-  Pothole warning system activated. Parsing the database for approaching potholes.
-  <button (click)="showSettings = !showSettings" ion-button icon-start>
-    <ion-icon name="settings"></ion-icon>
-    Show System Settings
-  </button>
-  <div *ngIf="showSettings">
-    <button (click)="forReal = !forReal" ion-button round color="danger">
-      Only Click If Authorized User
+  <div class="description">
+    <h1>Check out our features, {{ user }}!</h1>
+    <br />
+    <p>Pothole warning system activated. Parsing the database for approaching potholes.</p>
+    <br />
+    <button (click)="showSettings = !showSettings" ion-button icon-start>
+      <ion-icon name="settings"></ion-icon>
+      Show System Settings
     </button>
     <div *ngIf="forReal">
       <h2>DO THE NOLA SHAKE!</h2>
@@ -52,4 +51,6 @@
       <button ion-button full (click)="makeFake([15, 12.5, 45])">Make Fake</button>
     </div>
   </div>
+
+
 </ion-content>
