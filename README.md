@@ -20,7 +20,11 @@
 1. [Contributing](#contributing)
 
 ## About
-You're on your way to City Park with the family. Johnny and Suzy are getting along in the backseat, the dog is cuddling in Ame's lap, and everyone's singing along to No Scrubs. Out of nowhere
+Would you rather find out about potholes before or after you hit them? Well then you need Crater Gator! It uses the patented Pothole Parser TM to warn you of upcoming potholes so you can slow down or change lanes before you hit them. In addition, if you hit a pothole that's not in the database,it's added automatically. Then you can share it with your friends, Facebook, and even the mayor.
+
+Or do you have a pothole the size of a pond on your street? You can add it even without having to drive through it! And you can add an image to show the world just how bad it is.
+
+Want to see all the potholes in the city? Check out the Pothole Map for a bird's eye view of all the cities killer potholes.
 
 ## Usage
 

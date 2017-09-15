@@ -8,68 +8,67 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder';
 
 @Component({
   selector: 'page-list',
-  templateUrl: 'list.html'
+  templateUrl: 'list.html',
 })
 
 export class ListPage {
-  impacts: Array<any>
-  holes: Array<object>
-  potholes: Array<any> = [];
+  impacts: any[];
+  holes: object[];
+  potholes: any[] = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public requestService: RequestService,
     private socialSharing: SocialSharing,
-    private nativeGeocoder: NativeGeocoder
+    private nativeGeocoder: NativeGeocoder,
   ) {
     requestService.getImpacts()
-      .then(hits => {
-        this.impacts = hits.slice(0, 25).map(e => {
-          e.date = e.date.slice(5, 7) + '-'+ e.date.slice(8, 10) + '-'+
-          e.date.slice(0,4)
-          e.force = e.force.reduce((a, c) => a + (c/9.8).toString().slice(0,3)+',', '')
-          return e
-        })
-        this.impacts.forEach(impact => {
-          console.log(impact)
+      .then((hits) => {
+        this.impacts = hits.slice(0, 25).map((e) => {
+          e.date = e.date.slice(5, 7) + '-' + e.date.slice(8, 10) + '-' +
+          e.date.slice(0,4);
+          e.force = e.force.reduce((a, c) => a + (c / 9.8).toString().slice(0,3) + ',', '');
+          return e;
+        });
+        this.impacts.forEach((impact) => {
           this.requestService.getPotholeById(impact.pothole_id)
-            .then(hole => {
+            .then((hole) => {
               this.nativeGeocoder.reverseGeocode(hole.lat, hole.lng)
-              .then(address => {
-                if(impact.force === '0.1,') {
+              .then((address) => {
+                if (impact.force === '0.1,') {
                   this.potholes.unshift({
                     date: impact.date,
                     force: impact.force,
                     name: hole.name,
-                    num: address.subThoroughfare,
+                    num: address.subThoroughfare.split('-')[0],
                     street: address.thoroughfare,
-                    message:`
-                      You manually added the ${hole.name} at ${address.subThoroughfare} ${address.thoroughfare}
-                      on ${impact.date}. Thanks!`
-                  })
+                    message:`You manually added the ${hole.name} at ` +
+                    `${address.subThoroughfare} ${address.thoroughfare} on ${impact.date}. Thanks!`,
+                  });
                 } else {
                   this.potholes.unshift({
                     date: impact.date,
                     force: impact.force,
                     name: hole.name,
-                    num: address.subThoroughfare,
+                    num: address.subThoroughfare.split('-')[0],
                     street: address.thoroughfare,
                     message:`
-                      You hit the ${hole.name} at ${address.subThoroughfare} ${address.thoroughfare}
-                      with a force of ${impact.force} Gs on ${impact.date}`
-                  })
+                      You hit the ${hole.name} at ${address.subThoroughfare.split('-')[0]} ` +
+                      `${address.thoroughfare} with a force of ${impact.force} Gs on ` +
+                      ` ${impact.date}`,
+                  });
                 }
-              })
-            })
-        })
-      })
+              });
+            });
+        });
+      });
   }
   // You hit {{pothole.name}} at {{pothole.num}} {{pothole.street}} with a force of
   // {{pothole.force}} Gs on {{pothole.date}}
   postToFb(p: any): any {
-    let message = `There's a huge pothole named ${p.name} at ${p.num} ${p.street}! @MayorLandrieu`
-    this.socialSharing.share(message, null, null)
+    const message = `There's a huge pothole named ${p.name} at ${p.num}` +
+    `${p.street}! @MayorLandrieu`;
+    this.socialSharing.share(message, null, null);
   }
-
 }

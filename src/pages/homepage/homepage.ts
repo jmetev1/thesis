@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { NativeStorage } from '@ionic-native/native-storage';
 
+
 @IonicPage()
 @Component({
   selector: 'page-homepage',
@@ -31,6 +32,7 @@ export class Homepage {
   used: object = {};
   showSettings: boolean = false;
   forReal: boolean = false;
+  minSpeed: number = 10;
 
   constructor(
     private geolocation: Geolocation,
@@ -62,7 +64,6 @@ export class Homepage {
   }
   watchLoc() {
     const cb = (data) => {
-      console.log('cb called with', data)
       this.coords = data.coords;
       this.requestService.getPotholes().then((potholes) => {
         !this.trackerStarted ? (
@@ -77,12 +78,14 @@ export class Homepage {
     let latitude;
     let longitude;
     let heading;
+    let speed;
     this.realGeo ? (this.subscription = this.geolocation.watchPosition(
       { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
       latitude = 29.927594 + Math.random() * .08865,
       longitude = -90.132690 + Math.random() * .196903,
       heading = 0,
-      cb({ coords: { latitude, longitude, heading } })
+      speed = 15,
+      cb({ coords: { latitude, longitude, heading, speed } })
     );
   }
   joltWatcher = () => {
@@ -100,7 +103,7 @@ export class Homepage {
         this.moveCounter = Math.max(0, this.moveCounter = this.moveCounter - 1),
         this.jolts = []
       );
-      if (this.moveCounter > this.limit) {
+      if (this.moveCounter > this.limit && this.coords.speed > this.minSpeed) {
         this.saveImpact(this.jolts);
         this.jolts = [];
         this.moveCounter = 0;
@@ -153,17 +156,17 @@ export class Homepage {
   }
   tracker(holes) {
     const watching = {
-      '1': { t: 3, d: .5, st: holes.slice() },
-      '2': { t: 10, d: .8, st: [] },
-      '3': { t: 20, d: 2, st: [] }};
+      1: { t: 3, d: .5, st: holes.slice() },
+      2: { t: 10, d: .8, st: [] },
+      3: { t: 20, d: 2, st: [] }};
     const workOrder = this.workOrder;
     const sorter = (object, index) => {
       const sorted = { 1: [],2: [], 3: [] };
       object.st.forEach((h) => {
         h.d = this.getDist(this.coords.latitude, this.coords.longitude, h.lat, h.lng);
-        h.d < watching['1'].d ? sorted['1'].push(h) : (
-          h.d < watching['2'].d ? sorted['2'].push(h) : (
-            h.d < watching['3'].d ? sorted['3'].push(h) : 1
+        h.d < watching[1].d ? sorted['1'].push(h) : (
+          h.d < watching[2].d ? sorted['2'].push(h) : (
+            h.d < watching[3].d ? sorted['3'].push(h) : 1
         ));
       });
       for (const key in watching) {
@@ -193,14 +196,14 @@ export class Homepage {
     let longitude;
     this.requestService.snapToRoad(this.coords.latitude, this.coords.longitude)
     .then((res) => {
-      console.log(res)
       latitude = round(res.snappedPoints[0].location.latitude, 4);
       longitude = round(res.snappedPoints[0].location.longitude, 4);
       const roundedJolts = jolts.map(j => Math.floor(j));
       this.toSave = [latitude, longitude, roundedJolts];
-      console.log(latitude, this.toSave);
+      console.log(199);
       this.requestService.getPotholeByLocation(latitude, longitude)
       .then((data) => {
+        console.log(202);
         if (!data || data.length === 0) {
           this.requestService.createPothole({
             name: this.name(),
@@ -210,6 +213,7 @@ export class Homepage {
           .then((hole) => {
             this.nativeStorage.getItem('user')
               .then((user) => {
+                console.log(213);
                 this.requestService.createImpact({
                   force: roundedJolts,
                   users_id: user.id,
