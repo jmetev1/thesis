@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RequestService } from '../../app/request.service';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { NativeStorage } from '@ionic-native/native-storage';
 
@@ -31,21 +30,26 @@ export class ManualEntryPage {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private requestService: RequestService,
     private nativeStorage: NativeStorage,
     private camera: Camera,
     public dropbox: Dropbox,
     public navParams: NavParams) {
-
-      this.geolocation.getCurrentPosition().then((resp) => {
-        const round = (t, d) => Number(Math.round(Number(t+'e'+d))+'e-'+d);
-        this.lat = round(resp.coords.latitude, 4);
-        this.lng = round(resp.coords.longitude, 4);
-        this.nativeGeocoder.reverseGeocode(this.lat, this.lng)
-          .then(res => this.location = `${res.subThoroughfare} ${res.thoroughfare}`)
-      }).catch((error) => console.log('Error getting location', error));
+    const location = this.requestService.location().then((resp) => {
+      const round = (t, d) => Number(Math.round(Number(t + 'e' + d)) + 'e-' + d);
+      this.lat = round(resp.coords.latitude, 4);
+      this.lng = round(resp.coords.longitude, 4);
+      this.nativeGeocoder.reverseGeocode(this.lat, this.lng)
+        .then(res => this.location = `${res.subThoroughfare} ${res.thoroughfare}`);
+      }).catch(error => console.log('Error getting location', error));
+      // this.geolocation.getCurrentPosition().then((resp) => {
+      //   const round = (t, d) => Number(Math.round(Number(t+'e'+d))+'e-'+d);
+      //   this.lat = round(resp.coords.latitude, 4);
+      //   this.lng = round(resp.coords.longitude, 4);
+      //   this.nativeGeocoder.reverseGeocode(this.lat, this.lng)
+      //     .then(res => this.location = `${res.subThoroughfare} ${res.thoroughfare}`)
+      // }).catch((error) => console.log('Error getting location', error));
   }
 
   takePicture() {

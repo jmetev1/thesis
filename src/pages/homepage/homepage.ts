@@ -79,7 +79,9 @@ export class Homepage {
     let longitude;
     let heading;
     let speed;
-    this.realGeo ? (this.subscription = this.geolocation.watchPosition(
+    // this.realGeo ? (this.subscription = this.geolocation.watchPosition(
+    //   { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
+    this.realGeo ? (this.subscription = this.requestService.watch().watchPosition(
       { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
       latitude = 29.927594 + Math.random() * .08865,
       longitude = -90.132690 + Math.random() * .196903,
