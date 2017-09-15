@@ -196,8 +196,10 @@ export class Homepage {
       longitude = round(res.snappedPoints[0].location.longitude, 4);
       const roundedJolts = jolts.map(j => Math.floor(j));
       this.toSave = [latitude, longitude, roundedJolts];
+      console.log(199);
       this.requestService.getPotholeByLocation(latitude, longitude)
       .then((data) => {
+        console.log(202);
         if (!data || data.length === 0) {
           this.requestService.createPothole({
             name: this.name(),
@@ -207,6 +209,7 @@ export class Homepage {
           .then((hole) => {
             this.nativeStorage.getItem('user')
               .then((user) => {
+                console.log(213);
                 this.requestService.createImpact({
                   force: roundedJolts,
                   users_id: user.id,

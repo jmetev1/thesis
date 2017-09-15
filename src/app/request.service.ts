@@ -90,6 +90,7 @@ export class RequestService {
   }
 
   private handleError(error: any): Promise<any> {
+    console.log('handle error in rq serv');
     return Promise.reject(error.message || error);
   }
 }
