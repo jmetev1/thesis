@@ -7,7 +7,9 @@ reduce data usage
 7. option to have phone buzz or talk to you
 9. machine learning
 10. deploy somewhere easier than android store?
-11. add something for loading screen, pothole quotes to add interest for social m
+11. add something for loading screen, pothole quotes to add interest for 
+12. geolocation can't be on both pages.
+social m
 edia sharing
 mola transit
 how to test server for multiple users running app at once.

@@ -1,6 +1,7 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 import 'rxjs/add/operator/toPromise';
@@ -18,10 +19,28 @@ export class Impact {
 }
 @Injectable()
 export class RequestService {
+  subscribe: any;
   private headers = new Headers({ 'Content-Type': 'application/json' });
   // private url = 'http://54.227.175.5/'
   private url = 'https://cratergator.club/';
-  constructor(private http: Http, private nativeStorage: NativeStorage) { }
+  constructor(
+    private http: Http, private nativeStorage: NativeStorage, private geolocation: Geolocation,
+  ) { }
+
+  location() {
+    if (this.subscribe) {
+      if (this.subscribe.unsubscribe) {
+        this.subscribe.unsubscribe();
+      }
+    }
+    return this.geolocation.getCurrentPosition().then(resp => resp);
+  }
+
+  watch() {
+    this.subscribe = this.geolocation;
+    return this.subscribe;
+    // watchPosition(      { enableHighAccuracy: true }).subscribe(loc => loc);
+  }
 
   snapToRoad(lat, lng) {
     const key = 'AIzaSyCDkBmhOoNsGrpIXsS4R-CT4IoVLrYuATU';

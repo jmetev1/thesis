@@ -26,13 +26,13 @@ export class LoginPage {
     private requestService: RequestService,
     private nativeStorage: NativeStorage,
   ) {
-    // this.nativeStorage.getItem('user')
-    //   .then((data) => {
-    //     if (data) {
-    //       this.redirectToDash();
-    //     }
-    //   })
-    //   .catch(error => console.error(error));
+    this.nativeStorage.getItem('user')
+      .then((data) => {
+        if (data) {
+          this.redirectToDash();
+        }
+      })
+      .catch(error => console.error(error));
   }
   facebookLogin(): void {
     this.fb.login(['public_profile', 'email'])
