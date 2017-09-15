@@ -21,6 +21,10 @@
     <div *ngIf="forReal">
       <h2>DO THE NOLA SHAKE!</h2>
       <div>Wait for it! {{trigger}}</div>
+      
+      <div> Minimum  in meters/second is: {{minSpeed}}</div>
+      <input [(ngModel)]="minSpeed" placeholder="new minspeed">
+
       <div># of movements Is: {{limit}}</div>
       <input [(ngModel)]="limit" placeholder="new limit">
       <div>JoltSize is : {{joltSize}}</div>
@@ -32,18 +36,20 @@
         <div> {{coords.latitude}}</div>
         <div> {{coords.longitude}}</div>
         <div> Heading2: {{coords.heading}}</div>
+        <div> Speed {{coords.speed}} in m/s</div>
       </ion-list>
       <input [(ngModel)]="coords.heading" placeholder="new heading">
+      <input [(ngModel)]="coords.speed" placeholder="new speed">
       <div>Use Real Location? : {{realGeo}}</div>
-      <button danger (click)="realLocationToggle()">Toggle Fake Location</button>
-      <button danger (click)="saveImpact([15, 12.5, 45])">Save Another/playsound</button>
-      <button danger (click)="getPotholes()">Get Potholes</button>
+      <button ion-button full (click)="realLocationToggle()">Toggle Fake Location</button>
+      <button ion-button full (click)="saveImpact([15, 12.5, 45])">Save Another/playsound</button>
+      <button ion-button full (click)="getPotholes()">Get Potholes</button>
       <ion-list> About to save this impact
         <ion-item *ngFor="let a of toSave">
           {{a}}
         </ion-item>
       </ion-list>
-      <button danger (click)="makeFake([15, 12.5, 45])">Make Fake</button>
+      <button ion-button full (click)="makeFake([15, 12.5, 45])">Make Fake</button>
     </div>
   </div>
 </ion-content>

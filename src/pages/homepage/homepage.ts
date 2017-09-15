@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { NativeStorage } from '@ionic-native/native-storage';
 
+
 @IonicPage()
 @Component({
   selector: 'page-homepage',
@@ -31,6 +32,7 @@ export class Homepage {
   used: object = {};
   showSettings: boolean = false;
   forReal: boolean = false;
+  minSpeed: number = 10;
 
   constructor(
     private geolocation: Geolocation,
@@ -76,12 +78,14 @@ export class Homepage {
     let latitude;
     let longitude;
     let heading;
+    let speed;
     this.realGeo ? (this.subscription = this.geolocation.watchPosition(
       { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
       latitude = 29.927594 + Math.random() * .08865,
       longitude = -90.132690 + Math.random() * .196903,
       heading = 0,
-      cb({ coords: { latitude, longitude, heading } })
+      speed = 15,
+      cb({ coords: { latitude, longitude, heading, speed } })
     );
   }
   joltWatcher = () => {
@@ -99,7 +103,7 @@ export class Homepage {
         this.moveCounter = Math.max(0, this.moveCounter = this.moveCounter - 1),
         this.jolts = []
       );
-      if (this.moveCounter > this.limit) {
+      if (this.moveCounter > this.limit && this.coords.speed > this.minSpeed) {
         this.saveImpact(this.jolts);
         this.jolts = [];
         this.moveCounter = 0;

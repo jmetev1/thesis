@@ -5,7 +5,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { NativeStorage } from '@ionic-native/native-storage';
-import { Headers, Http } from '@angular/http';
 
 
 @IonicPage()
@@ -37,7 +36,6 @@ export class ManualEntryPage {
     private requestService: RequestService,
     private nativeStorage: NativeStorage,
     private camera: Camera,
-    private http: Http,
     public navParams: NavParams) {
 
     this.geolocation.getCurrentPosition().then((resp) => {
