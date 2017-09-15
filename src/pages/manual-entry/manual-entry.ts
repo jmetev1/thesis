@@ -23,7 +23,6 @@ export class ManualEntryPage {
     quality: 100,
     destinationType: this.camera.DestinationType.FILE_URI,
     encodingType: this.camera.EncodingType.JPEG,
-    // mediaType: this.camera.MediaType.PICTURE,
     targetHeight: 320,
     targetWidth: 320,
     saveToPhotoAlbum: true,
@@ -51,12 +50,12 @@ export class ManualEntryPage {
 
   takePicture() {
     // this.dropbox.savePhoto('https://media.myfoxmemphiscom.cmgdigital.com/photo/2017/01/16/gator_20170116171341601_7057460_ver1.0_1280_720.jpg');
-    // this.camera.getPicture(this.options)
-    //   .then(data => {
-    //     this.image = data
-    //     this.dropbox.savePhoto(this.image);
-    //   })
-    //   .catch(e => console.error(e));
+    this.camera.getPicture(this.options)
+      .then(data => {
+        this.image = data
+        // this.dropbox.savePhoto(this.image);
+      })
+      .catch(e => console.error(e));
   }
 
   alreadyStoredAlert() {

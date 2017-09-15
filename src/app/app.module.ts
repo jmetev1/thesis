@@ -27,7 +27,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 import { Dropbox } from '../providers/dropbox/dropbox';
-
+import { CloudinaryModule } from '@cloudinary/angular-4.x';
+import * as Cloudinary from 'cloudinary-core';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { Dropbox } from '../providers/dropbox/dropbox';
   ],
   imports: [
     BrowserModule,
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'dbfuuafr7' }),
     FormsModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
