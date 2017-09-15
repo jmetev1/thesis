@@ -62,7 +62,6 @@ export class Homepage {
   }
   watchLoc() {
     const cb = (data) => {
-      console.log('cb called with', data)
       this.coords = data.coords;
       this.requestService.getPotholes().then((potholes) => {
         !this.trackerStarted ? (
@@ -153,17 +152,17 @@ export class Homepage {
   }
   tracker(holes) {
     const watching = {
-      '1': { t: 3, d: .5, st: holes.slice() },
-      '2': { t: 10, d: .8, st: [] },
-      '3': { t: 20, d: 2, st: [] }};
+      1: { t: 3, d: .5, st: holes.slice() },
+      2: { t: 10, d: .8, st: [] },
+      3: { t: 20, d: 2, st: [] }};
     const workOrder = this.workOrder;
     const sorter = (object, index) => {
       const sorted = { 1: [],2: [], 3: [] };
       object.st.forEach((h) => {
         h.d = this.getDist(this.coords.latitude, this.coords.longitude, h.lat, h.lng);
-        h.d < watching['1'].d ? sorted['1'].push(h) : (
-          h.d < watching['2'].d ? sorted['2'].push(h) : (
-            h.d < watching['3'].d ? sorted['3'].push(h) : 1
+        h.d < watching[1].d ? sorted['1'].push(h) : (
+          h.d < watching[2].d ? sorted['2'].push(h) : (
+            h.d < watching[3].d ? sorted['3'].push(h) : 1
         ));
       });
       for (const key in watching) {
@@ -193,12 +192,10 @@ export class Homepage {
     let longitude;
     this.requestService.snapToRoad(this.coords.latitude, this.coords.longitude)
     .then((res) => {
-      console.log(res)
       latitude = round(res.snappedPoints[0].location.latitude, 4);
       longitude = round(res.snappedPoints[0].location.longitude, 4);
       const roundedJolts = jolts.map(j => Math.floor(j));
       this.toSave = [latitude, longitude, roundedJolts];
-      console.log(latitude, this.toSave);
       this.requestService.getPotholeByLocation(latitude, longitude)
       .then((data) => {
         if (!data || data.length === 0) {

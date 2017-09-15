@@ -1,6 +1,6 @@
-import { Injectable }    from '@angular/core'
-import { Headers, Http } from '@angular/http'
-import { NativeStorage } from '@ionic-native/native-storage'
+import { Injectable }    from '@angular/core';
+import { Headers, Http } from '@angular/http';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 import 'rxjs/add/operator/toPromise';
@@ -20,7 +20,7 @@ export class Impact {
 export class RequestService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
   // private url = 'http://54.227.175.5/'
-  private url = 'http://cratergator.club/';
+  private url = 'https://cratergator.club/';
   constructor(private http: Http, private nativeStorage: NativeStorage) { }
 
   snapToRoad(lat, lng) {
