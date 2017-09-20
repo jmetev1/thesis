@@ -11,8 +11,17 @@ page-homepage {
     color: #F3DFC1;
     text-align: center;
   }
-
+  #gator {
+    height: 100px;
+  }
   .content {
     background-color: rgba(22, 15, 41, 0.6);
+  }
+  .animated {
+    animation-name: tada;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
   }
 }

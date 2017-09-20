@@ -7,7 +7,7 @@ reduce data usage
 7. option to have phone buzz or talk to you
 9. machine learning
 10. deploy somewhere easier than android store?
-11. add something for loading screen, pothole quotes to add interest for 
+11. add something for loading screen, pothole quotes to add interest for
 12. geolocation can't be on both pages.
 social m
 edia sharing
@@ -20,3 +20,12 @@ watchLoc
     saveImpact
   request Service
     tracker
+
+
+    name of pothole different color
+    get more on map
+    get some better way to compare force of pothole impacts
+    background color changed from same as menu on greatest hits
+
+    put video on demo page, go to horizontal
+    have only '700' block of street instead of actual address

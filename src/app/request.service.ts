@@ -28,6 +28,7 @@ export class RequestService {
   ) { }
 
   location() {
+    console.log('location')
     if (this.subscribe) {
       if (this.subscribe.unsubscribe) {
         this.subscribe.unsubscribe();
@@ -37,12 +38,14 @@ export class RequestService {
   }
 
   watch() {
+    console.log('watch')
     this.subscribe = this.geolocation;
     return this.subscribe;
     // watchPosition(      { enableHighAccuracy: true }).subscribe(loc => loc);
   }
 
   snapToRoad(lat, lng) {
+    console.log('snapto')
     const key = 'AIzaSyCDkBmhOoNsGrpIXsS4R-CT4IoVLrYuATU';
     const roadUrl = `https://roads.googleapis.com/v1/snapToRoads?path=${lat},${lng}&key=${key}`;
     return this.http.get(roadUrl).toPromise().then(res => res.json())
@@ -50,13 +53,25 @@ export class RequestService {
   }
   // post requests
   createImpact(info: any): any {
+    console.log('create', 'rq serv 56', info)
     return this.http.post(`${this.url}impact`,
                           JSON.stringify(info),
                           { headers: this.headers }).toPromise()
     .then(res => res.json()).catch(this.handleError);
   }
-
+  // createImpact(info: any): any {
+  //   console.log('create', 'rq serv 56', info)
+  //   return this.http.post(`${this.url}impact`,
+  //                         JSON.stringify({
+  //                           users_id: 45,
+  //                           force: [1,1,1],
+  //                           pohothole_id: 1,
+  //                         }),
+  //                         { headers: this.headers }).toPromise()
+  //   .then(res => res.json()).catch(this.handleError);
+  // }
   createPothole(info: any): any {
+    console.log('create pothole')
     return this.http.post(`${this.url}pothole`,
                           JSON.stringify(info),
                           { headers: this.headers }).toPromise()
@@ -72,15 +87,18 @@ export class RequestService {
   }
 
   getImpacts() {
-    return this.nativeStorage.getItem('user')
-      .then((user) => {
-        return this.http.get(`${this.url}impact?users_id=${user.id}`)
+    console.log('getimpacts')
+    // return this.nativeStorage.getItem('user')
+      // .then((user) => {
+        // return this.http.get(`${this.url}impact?users_id=${user.id}`)
+        return this.http.get(`${this.url}impact`)
           .toPromise()
           .then(response => response.json() as Impact[])
           .catch(this.handleError);
-      });
+      // });
   }
   getPotholes() {
+    console.log('getphs')
     return this.http.get(`${this.url}pothole`)
       .toPromise()
       .then(response => response.json() as Pothole[])
@@ -88,6 +106,7 @@ export class RequestService {
   }
 
   getUser(userToken: string): any {
+    console.log('getuser')
     return this.http.get(`${this.url}users?token=${userToken}`)
       .toPromise()
       .then(res => res.json())
@@ -95,6 +114,7 @@ export class RequestService {
   }
 
   getPotholeByLocation(lat, lng) {
+    console.log('getph by id')
     return this.http.get(`${this.url}pothole?lat=${lat}&&lng=${lng}`)
       .toPromise()
       .then(res => res.json())
@@ -102,6 +122,7 @@ export class RequestService {
   }
 
   getPotholeById(id: string) {
+    console.log('getph by id')
     return this.http.get(`${this.url}pothole?id=${id}`)
       .toPromise()
       .then(res => res.json()[0] as Pothole)

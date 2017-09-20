@@ -18,11 +18,11 @@ export class Homepage {
   private moveCounter:number = 0;
   trigger: string = 'none';
   jolts: number[] = [1, 1, 1];
-  limit:number= 3;
-  joltSize:number = 18;
+  limit:number= 2;
+  joltSize:number = 8;
   coords: any = { latitude: 100, longitude: 100, heading: 100 };
   holes: any = [1,1,1];
-  realGeo: boolean  = false;
+  realGeo: boolean  = true;
   trackerStarted:Boolean = false;
   joltWatcherStarted: Boolean = false;
   toSave: any = [1, 2, 3];
@@ -33,6 +33,7 @@ export class Homepage {
   showSettings: boolean = false;
   forReal: boolean = false;
   minSpeed: number = 10;
+  showActivated: boolean = false;
 
   constructor(
     private geolocation: Geolocation,
@@ -42,12 +43,16 @@ export class Homepage {
     public platform: Platform,
     private nativeStorage: NativeStorage,
     private deviceMotion: DeviceMotion) {
-
     this.nativeStorage.getItem('user')
       .then(user => this.user = user.name);
   }
   ionViewDidEnter() {
     this.platform.ready().then(() => this.watchLoc());
+  }
+  deactivateAll() {
+    this.minSpeed =  50;
+    this.workOrder = this.workOrder + 1;
+    this.showActivated = false;
   }
   makeFake(force) {
     this.realGeo = false;
@@ -63,6 +68,8 @@ export class Homepage {
     this.watchLoc();
   }
   watchLoc() {
+    this.showActivated = true;
+    this.minSpeed = 3;
     const cb = (data) => {
       this.coords = data.coords;
       this.requestService.getPotholes().then((potholes) => {
@@ -79,8 +86,6 @@ export class Homepage {
     let longitude;
     let heading;
     let speed;
-    // this.realGeo ? (this.subscription = this.geolocation.watchPosition(
-    //   { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
     this.realGeo ? (this.subscription = this.requestService.watch().watchPosition(
       { enableHighAccuracy: true }).subscribe(loc => cb(loc))) : (
       latitude = 29.927594 + Math.random() * .08865,
@@ -144,7 +149,8 @@ export class Homepage {
         let addr;
         this.gc.reverseGeocode(p.lat, p.lng)
         .then((result) => {
-          addr = result.subThoroughfare + ' ' + result.thoroughfare;
+          addr = 'the ' + result.subThoroughfare.split('-')[0].slice(0, -2) + ' hundred block of' +
+          ' ' + result.thoroughfare;
           this.used[JSON.stringify(addr)] === true ? 1 : (
             this.used[JSON.stringify(addr)] = true,
             mes = `Approaching ${p.name} ${rounded} miles ahead at ${addr}`,
@@ -203,6 +209,7 @@ export class Homepage {
       .then((data) => {
         console.log(202);
         if (!data || data.length === 0) {
+          console.log(212, data);
           this.requestService.createPothole({
             name: this.name(),
             lat: latitude,
@@ -211,10 +218,10 @@ export class Homepage {
           .then((hole) => {
             this.nativeStorage.getItem('user')
               .then((user) => {
-                console.log(213);
+                console.log(220, user, hole);
                 this.requestService.createImpact({
                   force: roundedJolts,
-                  users_id: user.id,
+                  // users_id: user.id,
                   pothole_id: hole.id,
                 }).then(impact => console.log(impact, 108));
               });
@@ -222,9 +229,10 @@ export class Homepage {
         } else {
           this.nativeStorage.getItem('user')
             .then((user) => {
+              console.log(231, user, data)
               this.requestService.createImpact({
                 force: roundedJolts,
-                users_id: user.id,
+                // users_id: user.id,
                 pothole_id: data[0].id,
               }).then(impact => 1);
             });

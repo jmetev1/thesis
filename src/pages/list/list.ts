@@ -36,26 +36,28 @@ export class ListPage {
             .then((hole) => {
               this.nativeGeocoder.reverseGeocode(hole.lat, hole.lng)
               .then((address) => {
+                console.log(address);
+                const addressNumber = address.subThoroughfare ?
+                address.subThoroughfare.split('-')[0].slice(0, -2) + '00  block of' : '';
+                const messageCore = hole.name + ' on the ' + addressNumber +
+                ` ${address.thoroughfare} on ${impact.date}`;
                 if (impact.force === '0.1,') {
                   this.potholes.unshift({
                     date: impact.date,
                     force: impact.force,
                     name: hole.name,
-                    num: address.subThoroughfare.split('-')[0],
+                    num: addressNumber,
                     street: address.thoroughfare,
-                    message:`You manually added the ${hole.name} at ` +
-                    `${address.subThoroughfare} ${address.thoroughfare} on ${impact.date}. Thanks!`,
+                    message:`You manually added the ${messageCore} . Thanks!`,
                   });
                 } else {
                   this.potholes.unshift({
                     date: impact.date,
                     force: impact.force,
                     name: hole.name,
-                    num: address.subThoroughfare.split('-')[0],
+                    num: addressNumber,
                     street: address.thoroughfare,
-                    message:`
-                      You hit the ${hole.name} at ${address.subThoroughfare.split('-')[0]} ` +
-                      `${address.thoroughfare} with a force of ${impact.force} Gs on ` +
+                    message:`You hit the ${messageCore} with a force of ${impact.force} Gs on ` +
                       ` ${impact.date}`,
                   });
                 }
